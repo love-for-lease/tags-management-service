@@ -1,0 +1,11 @@
+version: '2.27.0'
+
+services:
+  app:
+    build: .
+    container_name: tag-management-service
+    ports:
+      - "7000:7000"
+    mem_limit: 512m
+volumes:
+  tag-management-data:
