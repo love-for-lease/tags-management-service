@@ -2,7 +2,11 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.4"
+	id("org.openapi.generator") version "6.6.0"
 }
+
+val sourceSets = the<SourceSetContainer>()
+val basePackage = "com.leaseforlove.tagsmanagementservice"
 
 group = "com.lease-for-love"
 version = "0.0.1-SNAPSHOT"
@@ -17,7 +21,33 @@ configurations {
 	}
 }
 
+// Open Api CodeGen
+tasks.compileJava { dependsOn("openApiGenerate") }
+openApiGenerate {
+	generatorName.set("spring")
+	inputSpec.set("$rootDir/src/main/resources/static/api-docs.yaml")
+	outputDir.set("$buildDir/generated/openapi")
+	modelNameSuffix.set("Dto")
+	configOptions.set(
+			mapOf(
+					"dateLibrary" to "java8",
+					"gradleBuildFile" to "false",
+					"basePackage" to "$basePackage.application.web.api",
+					"apiPackage" to "$basePackage.application.web.api",
+					"modelPackage" to "$basePackage.application.web.dto",
+					"interfaceOnly" to "true",
+					"hideGenerationTimestamp" to "true",
+					"openApiNullable" to "false",
+					"useTags" to "true",
+					"useJakartaEe" to "true"
+			)
+	)
+}
+
+sourceSets { getByName("main") { java { srcDir("$buildDir/generated/openapi/src/main/java") } } }
+
 repositories {
+	jcenter()
 	mavenCentral()
 }
 
@@ -91,6 +121,16 @@ dependencies {
 	componentTestImplementation("io.rest-assured:rest-assured:5.4.0")
 	componentTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	// Swagger
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
+	implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
+	implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+
+
 }
 
 tasks.withType<Test> {
