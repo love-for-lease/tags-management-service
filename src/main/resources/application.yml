@@ -1,3 +1,8 @@
 spring:
   application:
   name: tags-management-service
+
+  data:
+    mongodb:
+      uri: ${MONGO_DATABASE_URI:mongodb://tags-management-service:tags-management-service@localhost:27017/}
+      database: ${MONGO_DATABASE_DATABASE:admin}
