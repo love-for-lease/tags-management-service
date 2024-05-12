@@ -85,12 +85,18 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 
 	// Testing
-	archTestImplementation("com.tngtech.archunit:archunit:1.2.1")
+	archTestImplementation("com.tngtech.archunit:archunit:1.3.0")
+	archTestImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
 	componentTestImplementation("com.github.tomakehurst:wiremock:3.0.0")
 	componentTestImplementation("io.rest-assured:rest-assured:5.4.0")
+	componentTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.named("build") {
+	dependsOn("archTest", "componentTest")
 }

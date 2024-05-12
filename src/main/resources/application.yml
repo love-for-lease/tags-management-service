@@ -1,1 +1,3 @@
-spring.application.name=tags-management-service
+spring:
+  application:
+  name: tags-management-service
