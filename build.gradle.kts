@@ -30,6 +30,13 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("io.mongock:mongock-springboot:5.4.2")
+	implementation("io.mongock:mongodb-springdata-v4-driver:5.4.2")
+	implementation("io.mongock:mongock:5.4.2")
+	implementation("io.mongock:mongock-standalone:5.4.2")
+	implementation("io.mongock:mongock-springboot-v3:5.4.2")
+
+
 }
 
 tasks.withType<Test> {

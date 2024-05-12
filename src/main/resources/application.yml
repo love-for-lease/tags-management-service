@@ -1,1 +1,3 @@
-spring.application.name=tags-management-service
+mongock:
+  migration-scan-package:
+    - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
