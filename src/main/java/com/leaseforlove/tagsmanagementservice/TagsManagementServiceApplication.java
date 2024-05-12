@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@EnableMongock
 public class TagsManagementServiceApplication {
 
 	public static void main(String[] args) {
