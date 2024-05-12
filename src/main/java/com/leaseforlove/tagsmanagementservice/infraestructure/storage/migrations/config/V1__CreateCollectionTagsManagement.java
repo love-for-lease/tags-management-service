@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 
-@ChangeUnit(id="12.05.24", order = "001", author = "FredyHG")
-public class V1__Create_Collection {
+@ChangeUnit(id="12.05.24-<create-collection-tags-management>", order = "001", author = "FredyHG")
+public class V1__CreateCollectionTagsManagement {
 
     private final MongoTemplate mongoTemplate;
 
-    public V1__Create_Collection(MongoTemplate mongoTemplate) {
+    public V1__CreateCollectionTagsManagement(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
