@@ -91,6 +91,9 @@ dependencies {
 	componentTestImplementation("io.rest-assured:rest-assured:5.4.0")
 	componentTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("io.mongock:mongodb-springdata-v4-driver:5.4.2")
+	implementation("io.mongock:mongock:5.4.2")
+	implementation("io.mongock:mongock-springboot-v3:5.4.2")
 }
 
 tasks.withType<Test> {
