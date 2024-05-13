@@ -129,6 +129,10 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 
+    // Mongock
+	implementation("io.mongock:mongodb-springdata-v4-driver:5.4.2")
+	implementation("io.mongock:mongock:5.4.2")
+	implementation("io.mongock:mongock-springboot-v3:5.4.2")
 }
 
 tasks.withType<Test> {

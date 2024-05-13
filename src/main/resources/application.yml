@@ -14,3 +14,7 @@ spring:
 springdoc:
   swagger-ui:
     path: /docs
+
+mongock:
+  migration-scan-package:
+    - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
