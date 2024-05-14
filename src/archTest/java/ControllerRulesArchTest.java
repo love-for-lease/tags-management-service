@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @AnalyzeClasses(packages = "com.leaseforlove.tagsmanagementservice")
@@ -76,6 +77,13 @@ public class ControllerRulesArchTest {
                     .andShould().beAnnotatedWith(RequestMapping.class)
                     .allowEmptyShould(true)
                     .because("Classes within the controllers layer must be annotated with '@RestController' and '@RequestMapping'");
+
+    @ArchTest
+    static final ArchRule classes_in_controller_should_not_be_annotated_with_response_status =
+            noClasses().that().resideInAPackage("..controllers..")
+                    .should().notBeAnnotatedWith(ResponseStatus.class)
+                    .allowEmptyShould(true)
+                    .because("Classes within the 'controllers' package should not be annotated with '@ResponseStatus'");
 
     private static DescribedPredicate<JavaMember> areDeclaredInController() {
         DescribedPredicate<JavaClass> aPackageController = GET_PACKAGE_NAME.is(PackageMatchers.of("..controllers..", "java.."))
