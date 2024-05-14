@@ -13,6 +13,7 @@ plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.openapi.generator") version "7.5.0"
+	id("info.solidsoft.pitest") version "1.15.0"
 }
 
 configurations {
