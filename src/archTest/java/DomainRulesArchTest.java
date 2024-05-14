@@ -17,8 +17,8 @@ public class DomainRulesArchTest {
                     .because("Infrastructure and Application packages only be access interfaces from domain.gateways package");
 
     @ArchTest
-    static final ArchRule gataways_should_be_reside_only_gateways_package =
-            noClasses().that().resideOutsideOfPackage("..domain.gateways..")
+    static final ArchRule gateways_should_be_reside_only_gateways_package =
+            noClasses().that().resideInAPackage("..domain.gateways..")
                     .should().accessClassesThat().resideInAnyPackage(
                             "..domain.services..", "..domain.core..", "..application.http..")
                     .allowEmptyShould(true)
@@ -26,10 +26,10 @@ public class DomainRulesArchTest {
 
     @ArchTest
     static final ArchRule domain_not_be_access_infrastructure_or_application_classes =
-            noClasses().that().resideInAnyPackage("..application..", "..infrastructure..")
-                    .should().accessClassesThat().resideInAnyPackage("..domain..")
+            noClasses().that().resideInAnyPackage("..domain..")
+                    .should().accessClassesThat().resideInAnyPackage("..application..", "..infrastructure..")
                     .allowEmptyShould(true)
-                    .because("Domain not be access classes from Infrastructure or Application packages");
+                    .because("Classes in the domain package should not access classes from the infrastructure or application packages");
 
     @ArchTest
     static final ArchRule classes_name_in_gateways_should_have_gateway_suffix =
