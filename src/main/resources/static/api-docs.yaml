@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: tags-management-service
+  version: '1.0'
+  description: 'Esta API recebe solicitações de inclusão de tags, armazena e, após validação, disponibiliza para os usuários finais. Além disso, oferece dados para a criação de dashboards, permitindo uma melhor compreensão do comportamento dos usuários finais.'
+servers:
+  - url: 'http://localhost:7000'
+paths: {}
+components:
+  schemas:
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+      required:
+        - type
+        - message
+        - details

@@ -1,6 +1,6 @@
-package com.leaseforlove.tagsmanagementservice.application.http.configs.handlers;
+package com.leaseforlove.tagsmanagementservice.application.http.config.handlers;
 
-import com.leaseforlove.tagsmanagementservice.application.web.dto.ErrorMessageDTO;
+import com.leaseforlove.tagsmanagementservice.application.web.dto.ErrorResponseDto;
 import com.leaseforlove.tagsmanagementservice.domain.exceptions.DomainException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -24,18 +24,16 @@ public class DomainExceptionHandler {
     }
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<ErrorMessageDTO> handleDomainException(DomainException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponseDto> handleDomainException(DomainException ex, HttpServletRequest request) {
         logger.error("Exception handled: {}", ex.getMessage(), ex);
 
         HttpStatus status = mapStatus(ex);
+        ErrorResponseDto errorResponse = new ErrorResponseDto(
+                ex.getType(),
+                ex.getMessage(),
+                ex.getDetails()
+        );
 
-        ErrorMessageDTO errorResponse = ErrorMessageDTO
-                .builder()
-                .type(ex.getType())
-                .message(ex.getMessage())
-                .uri(request.getRequestURI())
-                .details(ex.getDetails())
-                .build();
 
         return new ResponseEntity<>(errorResponse, status);
     }
