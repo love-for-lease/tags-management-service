@@ -1,3 +1,4 @@
+import info.solidsoft.gradle.pitest.PitestPluginExtension
 
 group = "com.lease-for-love"
 version = "0.0.1-SNAPSHOT"
@@ -49,6 +50,21 @@ sourceSets { getByName("main") { java { srcDir("$buildDir/generated/openapi/src/
 repositories {
 	jcenter()
 	mavenCentral()
+}
+
+// Pitest
+configure<PitestPluginExtension> {
+	junit5PluginVersion.set("1.2.1")
+	targetClasses.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
+	targetTests.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
+	threads.set(Runtime.getRuntime().availableProcessors())
+	outputFormats.set(setOf("XML", "HTML"))
+	excludedClasses = listOf(
+			"com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations.config.*",
+			"com.leaseforlove.tagsmanagementservice.domain.core.*",
+			"com.leaseforlove.tagsmanagementservice.application.web.dto.*",
+			"com.leaseforlove.tagsmanagementservice.application.web.api.*"
+	)
 }
 
 
@@ -134,6 +150,9 @@ dependencies {
 	implementation("io.mongock:mongodb-springdata-v4-driver:5.4.2")
 	implementation("io.mongock:mongock:5.4.2")
 	implementation("io.mongock:mongock-springboot-v3:5.4.2")
+
+	// Pitest
+	implementation("org.pitest:pitest-junit5-plugin:1.2.1")
 }
 
 tasks.withType<Test> {
