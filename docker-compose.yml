@@ -1,7 +1,6 @@
-version: '2.27.0'
+version: '3.8'
 
 services:
-
   tags-management-db:
     image: mongo
     container_name: tags-management-db
@@ -12,16 +11,16 @@ services:
       - MONGO_INITDB_DATABASE=tags-management-service
       - TZ=America/Sao_Paulo
     ports:
-      - 27017:27017
+      - "27017:27017"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.44.0
+    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus:/etc/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
 
   grafana:
     image: grafana/grafana

@@ -18,3 +18,12 @@ springdoc:
 mongock:
   migration-scan-package:
     - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
+
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ['health','metrics', 'prometheus']

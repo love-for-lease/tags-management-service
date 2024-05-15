@@ -133,6 +133,9 @@ dependencies {
 	implementation("io.mongock:mongodb-springdata-v4-driver:5.4.2")
 	implementation("io.mongock:mongock:5.4.2")
 	implementation("io.mongock:mongock-springboot-v3:5.4.2")
+
+	//Prometheus
+	implementation("io.micrometer:micrometer-registry-prometheus:1.12.5")
 }
 
 tasks.withType<Test> {
