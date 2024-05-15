@@ -9,9 +9,6 @@ class TagsManagementServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
-		boolean i = false;
-
-		Assertions.assertFalse(i);
 	}
 
 }
