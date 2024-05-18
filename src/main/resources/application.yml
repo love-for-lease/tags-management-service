@@ -18,3 +18,7 @@ springdoc:
 mongock:
   migration-scan-package:
     - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
+
+app:
+  queue:
+    tags-registered-queue: ${TAGS_REGISTERED_QUEUE}
