@@ -2,6 +2,8 @@ package com.leaseforlove.tagsmanagementservice.common.event;
 
 import com.leaseforlove.tagsmanagementservice.common.serializer.AbstractSerializer;
 
+import java.util.List;
+
 public class EventSerializer extends AbstractSerializer {
 
     private static EventSerializer eventSerializer;
@@ -23,9 +25,8 @@ public class EventSerializer extends AbstractSerializer {
     }
 
     public String serialize(DomainEvent aDomainEvent) {
-        String serialization = this.gson().toJson(aDomainEvent);
 
-        return serialization;
+        return this.gson().toJson(aDomainEvent);
     }
 
     public <T extends DomainEvent> T deserialize(String aSerialization, final Class<T> aType) {
@@ -36,5 +37,9 @@ public class EventSerializer extends AbstractSerializer {
 
     private EventSerializer() {
         this(false, false);
+    }
+
+    public String serialize(List<DomainEvent> aDomainEvent) {
+        return this.gson().toJson(aDomainEvent);
     }
 }

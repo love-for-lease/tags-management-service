@@ -10,6 +10,11 @@ spring:
     mongodb:
       uri: ${MONGO_DATABASE_URI:mongodb://tags-management-service:tags-management-service@localhost:27017/}
       database: ${MONGO_DATABASE_DATABASE:admin}
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:sa-east-1}
+    endpoint: ${AWS_ENDPOINT:localhost:4566}
 
 springdoc:
   swagger-ui:
@@ -20,5 +25,12 @@ mongock:
     - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
 
 app:
-  queue:
-    tags-registered-queue: ${TAGS_REGISTERED_QUEUE}
+  events:
+    queues:
+      tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
+
+logging:
+  level:
+    io:
+      awspring:
+        cloud: debug

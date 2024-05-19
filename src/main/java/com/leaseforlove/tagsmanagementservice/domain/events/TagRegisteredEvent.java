@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-public class TagRegisteredEvent implements DomainEvent {
+public class TagRegisteredEvent extends DomainEvent {
     private final String id;
     private final String name;
 

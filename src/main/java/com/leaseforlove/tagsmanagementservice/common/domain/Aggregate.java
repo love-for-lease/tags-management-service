@@ -12,8 +12,15 @@ public abstract class Aggregate {
 
     private final List<DomainEvent> events = new ArrayList<>();
 
-    protected void raiseEvents() {
-        DomainEventPublisher.instance()
-                .publish(this.events);
+    public void raiseEvents() {
+        DomainEventPublisher.instance().publishAll(this.events);
+    }
+
+    public void raiseEvent() {
+        DomainEventPublisher.instance().publish(this.events.stream().findFirst().get());
+    }
+
+    public void clearEvents() {
+        this.events.clear();
     }
 }

@@ -2,16 +2,18 @@ package com.leaseforlove.tagsmanagementservice.common.event;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class DomainEventPublisher {
 
     @Autowired
-    private DomainEventHandler domainEventHandler;
+    private EventStore eventStore;
 
     private static final ThreadLocal<DomainEventPublisher> instance = new ThreadLocal<>() {
-        private DomainEventPublisher initValue() {
+        protected DomainEventPublisher initialValue() {
             return new DomainEventPublisher();
         }
     };
@@ -20,7 +22,11 @@ public class DomainEventPublisher {
         return instance.get();
     }
 
-    public <T> void publish(final List<T> aDomainEvent) {
-        domainEventHandler.handleEvent(aDomainEvent);
+    public void publish(final DomainEvent aDomainEvent) {
+        eventStore.append(aDomainEvent);
+    }
+
+    public void publishAll(List<DomainEvent> aDomainEvents) {
+        eventStore.append(aDomainEvents);
     }
 }
