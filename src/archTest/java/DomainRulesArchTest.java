@@ -6,7 +6,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import org.springframework.stereotype.Service;
 
 
-@AnalyzeClasses(packages = "com.leaseforlove.tagsmanagementservice")
+@AnalyzeClasses(packages = "com.matchmate.tagsmanagementservice")
 public class DomainRulesArchTest {
 
     @ArchTest

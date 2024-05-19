@@ -5,7 +5,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
-@AnalyzeClasses(packages = "com.leaseforlove.tagsmanagementservice")
+@AnalyzeClasses(packages = "com.matchmate.tagsmanagementservice")
 public class StorageRulesArchTest {
 
     @ArchTest

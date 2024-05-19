@@ -22,7 +22,7 @@ springdoc:
 
 mongock:
   migration-scan-package:
-    - com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations
+    - com.matchmate.tagsmanagementservice.infraestructure.storage.migrations
 
 app:
   events:

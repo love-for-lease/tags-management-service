@@ -3,7 +3,7 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
-@AnalyzeClasses(packages = "com.leaseforlove.tagsmanagementservice")
+@AnalyzeClasses(packages = "com.matchmate.tagsmanagementservice")
 public class ClassDependencyArchTest {
 
     @ArchTest
