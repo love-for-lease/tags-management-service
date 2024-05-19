@@ -1,3 +1,6 @@
+import info.solidsoft.gradle.pitest.PitestPluginExtension
+
+group = "com.lease-for-love"
 group = "com.match-mate"
 version = "0.0.1-SNAPSHOT"
 val sourceSets = the<SourceSetContainer>()
@@ -17,6 +20,7 @@ plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.openapi.generator") version "7.5.0"
+	id("info.solidsoft.pitest") version "1.15.0"
 }
 
 configurations {
@@ -52,6 +56,21 @@ sourceSets { getByName("main") { java { srcDir("$buildDir/generated/openapi/src/
 repositories {
     jcenter()
     mavenCentral()
+}
+
+// Pitest
+configure<PitestPluginExtension> {
+	junit5PluginVersion.set("1.2.1")
+	targetClasses.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
+	targetTests.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
+	threads.set(Runtime.getRuntime().availableProcessors())
+	outputFormats.set(setOf("XML", "HTML"))
+	excludedClasses = listOf(
+			"com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations.config.*",
+			"com.leaseforlove.tagsmanagementservice.domain.core.*",
+			"com.leaseforlove.tagsmanagementservice.application.web.dto.*",
+			"com.leaseforlove.tagsmanagementservice.application.web.api.*"
+	)
 }
 
 
@@ -142,12 +161,17 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
     implementation("software.amazon.awssdk:sts")
 
+    //Prometheus
+    implementation("io.micrometer:micrometer-registry-prometheus:1.12.5")
+
+    // Pitest
+    implementation("org.pitest:pitest-junit5-plugin:1.2.1")
+
     //Others
     compileOnly("org.aspectj:aspectjweaver:1.9.6")
     compileOnly("org.projectlombok:lombok")
     compileOnly("com.google.code.gson:gson:2.1")
     annotationProcessor("org.projectlombok:lombok")
-
 }
 
 dependencyManagement {
