@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@AnalyzeClasses(packages = "com.leaseforlove.tagsmanagementservice")
+@AnalyzeClasses(packages = "com.matchmate.tagsmanagementservice")
 public class ApplicationRulesArchTest {
 
     @ArchTest

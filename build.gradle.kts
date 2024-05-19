@@ -1,13 +1,18 @@
 import info.solidsoft.gradle.pitest.PitestPluginExtension
 
 group = "com.lease-for-love"
+group = "com.match-mate"
 version = "0.0.1-SNAPSHOT"
 val sourceSets = the<SourceSetContainer>()
-val basePackage = "com.leaseforlove.tagsmanagementservice"
+val basePackage = "com.matchmate.tagsmanagementservice"
 val awsSpringVersion = "3.0.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+ext {
+    set("springCloudVersion", "2023.0.0")
 }
 
 plugins {
@@ -136,6 +141,7 @@ dependencies {
     componentTestImplementation("io.rest-assured:rest-assured:5.4.0")
     componentTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.13.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.instancio:instancio-junit:4.6.0")
 
     // Swagger
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
@@ -151,7 +157,9 @@ dependencies {
     implementation("io.mongock:mongock-springboot-v3:5.4.2")
 
     // AWS
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:${awsSpringVersion}"))
     implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
+    implementation("software.amazon.awssdk:sts")
 
     //Prometheus
     implementation("io.micrometer:micrometer-registry-prometheus:1.12.5")
