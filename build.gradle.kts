@@ -1,6 +1,5 @@
 import info.solidsoft.gradle.pitest.PitestPluginExtension
 
-group = "com.lease-for-love"
 group = "com.match-mate"
 version = "0.0.1-SNAPSHOT"
 val sourceSets = the<SourceSetContainer>()
@@ -61,15 +60,15 @@ repositories {
 // Pitest
 configure<PitestPluginExtension> {
 	junit5PluginVersion.set("1.2.1")
-	targetClasses.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
-	targetTests.set(setOf("com.leaseforlove.tagsmanagementservice.*"))
+	targetClasses.set(setOf("com.matchmate.tagsmanagementservice.*"))
+	targetTests.set(setOf("com.matchmate.tagsmanagementservice.*"))
 	threads.set(Runtime.getRuntime().availableProcessors())
 	outputFormats.set(setOf("XML", "HTML"))
 	excludedClasses = listOf(
-			"com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations.config.*",
-			"com.leaseforlove.tagsmanagementservice.domain.core.*",
-			"com.leaseforlove.tagsmanagementservice.application.web.dto.*",
-			"com.leaseforlove.tagsmanagementservice.application.web.api.*"
+			"com.matchmate.tagsmanagementservice.infraestructure.storage.migrations.config.*",
+			"com.matchmate.tagsmanagementservice.domain.core.*",
+			"com.matchmate.tagsmanagementservice.application.web.dto.*",
+			"com.matchmate.tagsmanagementservice.application.web.api.*"
 	)
 }
 
