@@ -1,6 +1,6 @@
-package com.matchmate.tagsmanagementservice.common.event;
+package com.matchmate.tagsmanagementservice.common.serializer;
 
-import com.matchmate.tagsmanagementservice.common.serializer.AbstractSerializer;
+import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 
 import java.util.List;
 

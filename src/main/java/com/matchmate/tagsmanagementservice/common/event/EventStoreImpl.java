@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.common.event;
 
+import com.matchmate.tagsmanagementservice.common.serializer.EventSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

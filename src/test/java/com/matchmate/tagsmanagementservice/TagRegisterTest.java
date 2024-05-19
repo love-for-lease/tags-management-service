@@ -8,6 +8,7 @@ import com.matchmate.tagsmanagementservice.common.event.StoredEvent;
 import com.matchmate.tagsmanagementservice.domain.models.Tag;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import static org.mockito.Mockito.times;
@@ -19,7 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.Arrays;
 import java.util.List;
 
-public class TagRegisterTest {
+class TagRegisterTest {
 
     @Mock
     private EventStore eventStore;
@@ -38,6 +39,7 @@ public class TagRegisterTest {
     }
 
     @Test
+    @DisplayName("Should save events in event store When raise events")
     void raiseEvents_ShouldCallPublishAll_WithEventList() {
         Tag tag = new Tag();
         tag.register("Anime");
@@ -67,7 +69,7 @@ public class TagRegisterTest {
     }
 
     @Test
-    public void publish_ShouldCallEventStoreAppend_WithSingleEvent() {
+    void publish_ShouldCallEventStoreAppend_WithSingleEvent() {
         Tag tag = new Tag();
         tag.register("Anime");
         tag.register("LOL");
@@ -78,7 +80,7 @@ public class TagRegisterTest {
     }
 
     @Test
-    public void publishAll_ShouldCallEventStoreAppend_WithEventList() {
+    void publishAll_ShouldCallEventStoreAppend_WithEventList() {
         Tag tag = new Tag();
         tag.register("Anime");
         tag.register("LOL");
