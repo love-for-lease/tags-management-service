@@ -27,3 +27,7 @@ management:
     web:
       exposure:
         include: ['health','metrics', 'prometheus']
+
+app:
+  queue:
+    tags-registered-queue: ${TAGS_REGISTERED_QUEUE}

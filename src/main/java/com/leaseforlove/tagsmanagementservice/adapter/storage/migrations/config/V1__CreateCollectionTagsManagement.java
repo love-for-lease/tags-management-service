@@ -1,4 +1,4 @@
-package com.leaseforlove.tagsmanagementservice.infraestructure.storage.migrations.config;
+package com.leaseforlove.tagsmanagementservice.adapter.storage.migrations.config;
 
 import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
