@@ -1,4 +1,4 @@
-package com.matchmate.tagsmanagementservice.application.config.http;
+package com.matchmate.tagsmanagementservice.application.http.handlers;
 
 import com.matchmate.tagsmanagementservice.application.web.dto.ErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
