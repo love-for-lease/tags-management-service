@@ -1,7 +1,7 @@
-group = "com.lease-for-love"
+group = "com.match-mate"
 version = "0.0.1-SNAPSHOT"
 val sourceSets = the<SourceSetContainer>()
-val basePackage = "com.leaseforlove.tagsmanagementservice"
+val basePackage = "com.matchmate.tagsmanagementservice"
 val awsSpringVersion = "3.0.1"
 
 java {
