@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.adapter.persistence.documents;
 
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -8,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Document("request-tag")
+@Getter
 public class RequestTagDocument {
     @Id
     private UUID id;
