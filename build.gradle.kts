@@ -134,7 +134,9 @@ dependencies {
 
     // AWS
     implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
-//    implementation("org.springframework.cloud:spring-cloud-starter-aws:$awsSpringVersion")
+
+    //Prometheus
+    implementation("io.micrometer:micrometer-registry-prometheus:1.12.5")
 
     //Others
     compileOnly("org.aspectj:aspectjweaver:1.9.6")
