@@ -1,12 +1,11 @@
 package com.matchmate.tagsmanagementservice.common.event;
 
 import com.matchmate.tagsmanagementservice.common.AssertionConcern;
-import org.springframework.cglib.core.Local;
+import com.matchmate.tagsmanagementservice.common.serializer.EventSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Document

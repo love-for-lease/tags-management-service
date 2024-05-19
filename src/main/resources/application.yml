@@ -22,7 +22,7 @@ springdoc:
 
 mongock:
   migration-scan-package:
-    - com.matchmate.tagsmanagementservice.infraestructure.storage.migrations
+    - com.matchmate.tagsmanagementservice.adapter.persistence.migrations
 
 management:
   endpoint:
