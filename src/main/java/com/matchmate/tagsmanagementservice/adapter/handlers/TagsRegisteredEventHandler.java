@@ -1,8 +1,7 @@
 package com.matchmate.tagsmanagementservice.adapter.handlers;
 
 import com.matchmate.tagsmanagementservice.adapter.messaging.QueueSender;
-import com.matchmate.tagsmanagementservice.application.config.QueuePropertiesConfig;
-import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
+import com.matchmate.tagsmanagementservice.application.properties.QueueProperties;
 import com.matchmate.tagsmanagementservice.common.event.DomainEventHandler;
 import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagsRegisteredEventHandler implements DomainEventHandler<TagRegisteredEvent> {
     private final QueueSender queueSender;
-    private final QueuePropertiesConfig queueProperties;
-
+    private final QueueProperties queueProperties;
 
     @Override
     public void handleEvent(List<TagRegisteredEvent> aDomainEvent) {

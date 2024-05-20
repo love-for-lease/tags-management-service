@@ -30,4 +30,6 @@ public class ApplicationRulesArchTest {
                     .andShould().notBeAnnotatedWith(Service.class)
                     .allowEmptyShould(true)
                     .because("Classes in application.services layer expected annotated with '@Component'. don't use '@Service'");
+
+
 }
