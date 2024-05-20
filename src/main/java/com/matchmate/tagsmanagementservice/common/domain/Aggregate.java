@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public abstract class Aggregate {
@@ -13,11 +14,15 @@ public abstract class Aggregate {
     private final List<DomainEvent> events = new ArrayList<>();
 
     public void raiseEvents() {
-        DomainEventPublisher.instance().publishAll(this.events);
+        DomainEventPublisher.instance().publishAll(Optional.of(this.events)
+                .orElseThrow(() -> new RuntimeException("not have events")));
+        this.clearEvents();
     }
 
     public void raiseEvent() {
-        DomainEventPublisher.instance().publish(this.events.stream().findFirst().get());
+        DomainEventPublisher.instance().publish(this.events.stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("not have events")));
+        this.clearEvents();
     }
 
     public void clearEvents() {

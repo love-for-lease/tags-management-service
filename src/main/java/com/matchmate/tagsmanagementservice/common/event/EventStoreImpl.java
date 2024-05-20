@@ -4,13 +4,15 @@ import com.matchmate.tagsmanagementservice.common.serializer.EventSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class EventStoreImpl implements EventStore {
 
-    private EventStoreMongoRepository eventStoreMongoRepository;
+    private EventStoreMongoRepository eventStoreRepository;
 
     @Override
     public StoredEvent append(DomainEvent aDomainEvent) {
@@ -20,24 +22,25 @@ public class EventStoreImpl implements EventStore {
         StoredEvent storedEvent = new StoredEvent(
                 aDomainEvent.getClass().getName(),
                 aDomainEvent.occurredOn(),
-                eventSerialization
+                eventSerialization,
+                UUID.fromString(aDomainEvent.getId())
         );
 
-        eventStoreMongoRepository.save(storedEvent);
-        return storedEvent;
+        return eventStoreRepository.save(storedEvent);
     }
 
     @Override
-    public List<StoredEvent> append(List<DomainEvent> aDomainEvent) {
+    public List<StoredEvent> append(List<? extends DomainEvent> aDomainEvent) {
         String eventsSerialization =
-                EventSerializer.instance().serialize(aDomainEvent);
+                EventSerializer.instance().serialize(Collections.unmodifiableList(aDomainEvent));
 
         List<StoredEvent> storedEventsToPersistence = aDomainEvent.stream().map(event -> new StoredEvent(
                         event.getClass().getName(),
                         event.occurredOn(),
-                        eventsSerialization))
+                        eventsSerialization,
+                        UUID.fromString(event.getId())))
                 .toList();
 
-        return eventStoreMongoRepository.saveAll(storedEventsToPersistence);
+        return eventStoreRepository.saveAll(storedEventsToPersistence);
     }
 }

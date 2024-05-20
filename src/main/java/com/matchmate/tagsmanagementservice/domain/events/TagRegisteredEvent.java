@@ -8,13 +8,11 @@ import java.util.UUID;
 
 @Getter
 public class TagRegisteredEvent extends DomainEvent {
-    private final String id;
     private final String name;
 
     public TagRegisteredEvent(String name) {
-        super();
+        super(UUID.randomUUID().toString());
         this.name = name;
-        this.id = UUID.randomUUID().toString();
     }
 
     @Override
