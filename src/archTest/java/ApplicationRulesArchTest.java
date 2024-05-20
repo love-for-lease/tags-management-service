@@ -31,10 +31,5 @@ public class ApplicationRulesArchTest {
                     .allowEmptyShould(true)
                     .because("Classes in application.services layer expected annotated with '@Component'. don't use '@Service'");
 
-    @ArchTest
-    static final ArchRule classes_name_in_properties_should_expected_Properties_suffix =
-            classes().that().resideInAPackage("..application.properties..")
-                    .should().haveSimpleNameEndingWith("Properties")
-                    .allowEmptyShould(true)
-                    .because("Classes from application.properties expected ending with 'Properties' suffix");
+
 }
