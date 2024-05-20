@@ -18,6 +18,5 @@ public class TagsRegisteredEventHandler implements DomainEventHandler<TagRegiste
     @Override
     public void handleEvent(List<TagRegisteredEvent> aDomainEvent) {
         queueSender.send(queueProperties.getTagRegisteredQueue(), aDomainEvent);
-
     }
 }
