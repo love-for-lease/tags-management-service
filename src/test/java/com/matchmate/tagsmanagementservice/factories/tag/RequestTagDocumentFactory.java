@@ -14,7 +14,7 @@ public class RequestTagDocumentFactory {
             .set(field(RequestTagDocument::getRequestedAt), OffsetDateTime.now())
             .toModel();
 
-    public static RequestTagDocument validRequestTagDocumentWithName(String name) {
+    public static RequestTagDocument validWithName(String name) {
         return Instancio.of(REQUEST_TAG_DOCUMENT_MODEL)
                 .set(field(RequestTagDocument::getName), name)
                 .create();

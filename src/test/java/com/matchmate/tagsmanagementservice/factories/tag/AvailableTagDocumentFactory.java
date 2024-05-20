@@ -16,7 +16,7 @@ public class AvailableTagDocumentFactory {
                     .set(field(AvailableTagDocument::getCreatedAt), OffsetDateTime.now())
                     .toModel();
 
-    public static AvailableTagDocument validAvailableTagDocumentWithName(String name) {
+    public static AvailableTagDocument validWithName(String name) {
         return Instancio.of(AVAILABLE_TAG_DOCUMENT_MODEL)
                 .set(field(AvailableTagDocument::getName), name)
                 .create();
