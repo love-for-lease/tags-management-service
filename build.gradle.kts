@@ -171,9 +171,6 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     compileOnly("com.google.code.gson:gson:2.1")
     annotationProcessor("org.projectlombok:lombok")
-
-    //
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 dependencyManagement {

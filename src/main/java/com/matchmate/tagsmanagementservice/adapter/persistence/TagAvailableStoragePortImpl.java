@@ -34,8 +34,6 @@ public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
 
         List<AvailableTagDocument> savedDocumentList = availableTagMongoRepository.saveAll(listDocumentToBeSaved);
 
-        System.out.println(savedDocumentList);
-
         return savedDocumentList
                 .stream()
                 .map(TagAvailableMapper::documentToTagAvailable)

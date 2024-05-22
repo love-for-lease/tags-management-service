@@ -1,7 +1,5 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
-import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
-import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import org.instancio.Instancio;
@@ -21,7 +19,7 @@ public class TagAvailableFactory {
 
     public static TagAvailable validWithName(String name) {
         return Instancio.of(TAG_AVAILABLE_MODEL)
-                .set(field(RequestTagDocument::getName), name)
+                .set(field(TagAvailable::getName), name)
                 .create();
     }
 

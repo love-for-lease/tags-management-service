@@ -7,14 +7,13 @@ import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 public class TagAvailableMapper {
 
     public static AvailableTagDocument tagAvailableToDocument(TagAvailable tagAvailable) {
-
         return new AvailableTagDocument(tagAvailable.getName(), tagAvailable.getStatus());
-
     }
 
     public static TagAvailable documentToTagAvailable(AvailableTagDocument tagDocument) {
         return TagAvailable
                 .builder()
+                .status(tagDocument.getStatus())
                 .name(tagDocument.getName())
                 .build();
     }

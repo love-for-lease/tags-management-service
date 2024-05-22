@@ -40,7 +40,9 @@ app:
     queues:
       tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
 
-  cron: 0 0 12 1,16 * ?
+  cron:
+    analyse-periodic-tags:
+      time: 0 0 12 1,16 * ?
 
 logging:
   level:

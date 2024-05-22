@@ -1,13 +1,13 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
-import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
 import org.instancio.Instancio;
 import org.instancio.Model;
-import static org.instancio.Select.field;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import static org.instancio.Select.field;
 
 public class RequestTagDocumentFactory {
 
