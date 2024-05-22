@@ -1,6 +1,7 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
+import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
 import com.matchmate.tagsmanagementservice.domain.models.Tag;
 import org.instancio.Instancio;
@@ -8,6 +9,7 @@ import org.instancio.Model;
 import static org.instancio.Select.field;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class AvailableTagDocumentFactory {
     private static final Model<AvailableTagDocument> AVAILABLE_TAG_DOCUMENT_MODEL =
@@ -19,6 +21,12 @@ public class AvailableTagDocumentFactory {
     public static AvailableTagDocument validWithName(String name) {
         return Instancio.of(AVAILABLE_TAG_DOCUMENT_MODEL)
                 .set(field(AvailableTagDocument::getName), name)
+                .create();
+    }
+
+    public static List<AvailableTagDocument> withSize(int size) {
+        return Instancio.ofList(AVAILABLE_TAG_DOCUMENT_MODEL)
+                .size(size)
                 .create();
     }
 }

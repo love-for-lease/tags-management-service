@@ -2,6 +2,8 @@ server:
   port: 7000
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: tags-management-service
   mvc:
@@ -14,7 +16,7 @@ spring:
     aws:
       region:
         static: ${AWS_REGION:sa-east-1}
-    endpoint: ${AWS_ENDPOINT:localhost:4566}
+      endpoint: ${AWS_ENDPOINT:localhost:4566}
 
 springdoc:
   swagger-ui:
@@ -37,6 +39,8 @@ app:
   events:
     queues:
       tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
+
+  cron: 0 0 12 1,16 * ?
 
 logging:
   level:
