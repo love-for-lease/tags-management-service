@@ -1,6 +1,7 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.TagAvailableStoragePortImpl;
+import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.common.mappers.TagAvailableMapper;
@@ -19,7 +20,7 @@ public class RequestTagJobAdapter implements RequestTagPort {
     private final RequestTagMongoRepository requestTagMongoRepository;
 
 
-    @Scheduled(cron = "${app.cron.analyse-periodic-tags.time}")
+    @Scheduled(cron = "${app.cron.analyse-periodic-request-tags}")
     public void analyzeRequestTags() {
 
         OffsetDateTime now = OffsetDateTime.now();
@@ -30,7 +31,13 @@ public class RequestTagJobAdapter implements RequestTagPort {
                         .map(TagAvailableMapper::requestToTagAvailable)
                         .toList();
 
-        tagAvailableStoragePortImpl.saveAll(listTagsToBeSaved);
+        List<AvailableTagDocument> listDocumentToBeSaved = listTagsToBeSaved
+                .stream()
+                .map(TagAvailableMapper::tagAvailableToDocument)
+                .toList();
+
+
+        tagAvailableStoragePortImpl.saveAll(listDocumentToBeSaved);
 
         requestTagMongoRepository.deleteAll(pendingTags);
     }

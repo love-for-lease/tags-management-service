@@ -32,7 +32,7 @@ class TagAvailableStoragePortImplTest {
     @Test
     void save_ShouldTagAvailableStoragePortSave_AndVerifyResultsContainsSameName() {
 
-        TagAvailable tagAvailable = TagAvailableFactory.validWithName("TAG_TEST");
+        TagAvailable tagAvailable = TagAvailableFactory.withValidName("TAG_TEST");
         AvailableTagDocument savedDocument = AvailableTagDocumentFactory.validWithName("TAG_TEST");
 
         when(availableTagMongoRepository.save(any(AvailableTagDocument.class))).thenReturn(savedDocument);
@@ -45,7 +45,7 @@ class TagAvailableStoragePortImplTest {
 
     @Test
     void saveAll_ShouldTagAvailableStoragePortSaveList_AndVerifyListOfResultsContainsSameStatus() {
-        List<TagAvailable> tags = TagAvailableFactory.withSize(2);
+        List<AvailableTagDocument> tags = AvailableTagDocumentFactory.withSize(2);
 
         List<AvailableTagDocument> documentsToBeSaved = AvailableTagDocumentFactory.withSize(2);
 

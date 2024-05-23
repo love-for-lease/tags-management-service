@@ -26,13 +26,9 @@ public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
     }
 
     @Override
-    public List<TagAvailable> saveAll(List<TagAvailable> tags) {
-        List<AvailableTagDocument> listDocumentToBeSaved = tags
-                .stream()
-                .map(TagAvailableMapper::tagAvailableToDocument)
-                .toList();
+    public List<TagAvailable> saveAll(List<AvailableTagDocument> tags) {
 
-        List<AvailableTagDocument> savedDocumentList = availableTagMongoRepository.saveAll(listDocumentToBeSaved);
+        List<AvailableTagDocument> savedDocumentList = availableTagMongoRepository.saveAll(tags);
 
         return savedDocumentList
                 .stream()

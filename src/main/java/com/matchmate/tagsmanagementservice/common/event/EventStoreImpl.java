@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EventStoreImpl implements EventStore {
 
-    private EventStoreMongoRepository eventStoreRepository;
+    private final EventStoreMongoRepository eventStoreRepository;
 
     @Override
     public StoredEvent append(DomainEvent aDomainEvent) {

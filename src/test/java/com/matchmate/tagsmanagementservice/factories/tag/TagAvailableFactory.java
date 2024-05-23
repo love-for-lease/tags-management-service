@@ -17,7 +17,7 @@ public class TagAvailableFactory {
                     .set(field(TagAvailable::getCreatedAt), OffsetDateTime.now())
                     .toModel();
 
-    public static TagAvailable validWithName(String name) {
+    public static TagAvailable withValidName(String name) {
         return Instancio.of(TAG_AVAILABLE_MODEL)
                 .set(field(TagAvailable::getName), name)
                 .create();

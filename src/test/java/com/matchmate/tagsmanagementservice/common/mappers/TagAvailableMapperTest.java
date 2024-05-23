@@ -14,7 +14,7 @@ class TagAvailableMapperTest {
 
     @Test
     void tagAvailableToDocument_ShouldMapTagAvailableToDocument_AndVerifyDocumentFields() {
-        TagAvailable tagAvailable = TagAvailableFactory.validWithName("TEST_TAG");
+        TagAvailable tagAvailable = TagAvailableFactory.withValidName("TEST_TAG");
 
         AvailableTagDocument result = TagAvailableMapper.tagAvailableToDocument(tagAvailable);
 
