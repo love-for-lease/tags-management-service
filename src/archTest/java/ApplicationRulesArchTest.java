@@ -32,4 +32,10 @@ public class ApplicationRulesArchTest {
                     .because("Classes in application.services layer expected annotated with '@Component'. don't use '@Service'");
 
 
+    @ArchTest
+    static final ArchRule classes_name_in_jobs_should_expected_Job_suffix =
+            classes().that().resideInAPackage("..adapter.jobs..")
+                    .should().haveSimpleNameEndingWith("Job")
+                    .allowEmptyShould(true)
+                    .because("Classes from adapter.jobs expected ending with 'Job' suffix");
 }
