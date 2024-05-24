@@ -40,4 +40,10 @@ public class RequestTagDocumentFactory {
                 .create();
     }
 
+    public static List<RequestTagDocument> withSizeWith20Request(int size) {
+        return Instancio.ofList(REQUEST_TAG_DOCUMENT_MODEL_WITH_20_REQUESTS)
+                .size(size)
+                .create();
+    }
+
 }

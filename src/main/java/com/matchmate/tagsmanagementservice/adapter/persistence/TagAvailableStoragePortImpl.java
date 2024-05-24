@@ -6,10 +6,12 @@ import com.matchmate.tagsmanagementservice.common.mappers.TagAvailableMapper;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import com.matchmate.tagsmanagementservice.domain.ports.TagAvailableStoragePort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
@@ -18,6 +20,8 @@ public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
 
     @Override
     public TagAvailable save(TagAvailable tagAvailable) {
+        log.info("Saving tag available: {}", tagAvailable.getName());
+
         AvailableTagDocument documentToBeSaved = TagAvailableMapper.tagAvailableToDocument(tagAvailable);
 
         AvailableTagDocument savedDocument = availableTagMongoRepository.save(documentToBeSaved);
@@ -27,6 +31,7 @@ public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
 
     @Override
     public List<TagAvailable> saveAll(List<AvailableTagDocument> tags) {
+        log.info("Saving tags available: {}", tags.size());
 
         List<AvailableTagDocument> savedDocumentList = availableTagMongoRepository.saveAll(tags);
 

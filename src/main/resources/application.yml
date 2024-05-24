@@ -36,12 +36,15 @@ management:
         include: ['health','metrics', 'prometheus']
 
 app:
+  analyse-periodic-request-tags:
+    minimum-request: 20
+    cron: 0 0 12 1,16 * ?
+
+
   events:
     queues:
       tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
 
-  cron:
-    analyse-periodic-request-tags: 0 0 12 1,16 * ?
 
 logging:
   level:

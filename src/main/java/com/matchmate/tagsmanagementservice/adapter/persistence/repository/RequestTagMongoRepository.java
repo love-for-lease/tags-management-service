@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface RequestTagMongoRepository extends MongoRepository<RequestTagDocument, UUID> {
 
-    @Query("{ 'date': { $lt: ?0 }, 'requests': { $gte: 20 } }")
-    List<RequestTagDocument> findAllPendingTagsWaitingForAnalysis(OffsetDateTime dateRange);
+    @Query("{ 'date': { $lt: ?0 }, 'requests': { $gte: ?1 } }")
+    List<RequestTagDocument> findByDateBeforeAndRequestsGreaterThanEqual(OffsetDateTime dateRange, Integer minimumRequest);
 }
