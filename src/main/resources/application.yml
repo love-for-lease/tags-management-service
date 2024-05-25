@@ -36,6 +36,9 @@ management:
         include: ['health','metrics', 'prometheus']
 
 app:
+  aws:
+    region: ${AWS_REGION:sa-east-1}
+    endpoint: ${AWS_ENDPOINT:http://localhost:4566}
   analyse-periodic-request-tags:
     range-date-analyze: 7
     minimum-request: 20
@@ -46,6 +49,8 @@ app:
     queues:
       tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
 
+  cron:
+    analyse-periodic-request-tags: 0 0 12 1,16 * ?
 
 logging:
   level:
