@@ -37,6 +37,7 @@ management:
 
 app:
   analyse-periodic-request-tags:
+    range-date-analyze: 7
     minimum-request: 20
     cron: 0 0 12 1,16 * ?
 
