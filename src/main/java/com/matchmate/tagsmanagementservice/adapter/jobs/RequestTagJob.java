@@ -1,11 +1,11 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
+import com.matchmate.tagsmanagementservice.adapter.exceptions.NoPendingTagException;
 import com.matchmate.tagsmanagementservice.adapter.persistence.TagAvailableStoragePortImpl;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
-import com.matchmate.tagsmanagementservice.application.properties.DateRangeAnalyzeProperties;
-import com.matchmate.tagsmanagementservice.application.properties.MinimumRequestProperties;
+import com.matchmate.tagsmanagementservice.application.properties.RequestTagAnalyzeProperties;
 import com.matchmate.tagsmanagementservice.common.mappers.TagAvailableMapper;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import com.matchmate.tagsmanagementservice.domain.ports.RequestTagPort;
@@ -22,26 +22,25 @@ public class RequestTagJob implements RequestTagPort {
 
     private final TagAvailableStoragePortImpl tagAvailableStoragePortImpl;
     private final RequestTagMongoRepository requestTagMongoRepository;
-    private final MinimumRequestProperties minimumRequestProperties;
-    private final DateRangeAnalyzeProperties dateRangeAnalyzeProperties;
+    private final RequestTagAnalyzeProperties requestTagAnalyzeProperties;
 
 
     @Scheduled(cron = "${app.analyse-periodic-request-tags.cron}")
     public void analyzeRequestTags() {
 
-        log.info("Analyzing request tags");
+        log.info("Analyzing request tags: start time {}", OffsetDateTime.now());
 
-        String dateRange = dateRangeAnalyzeProperties.getDateRangeDays();
+        String dateRange = requestTagAnalyzeProperties.getRangeDateAnalyze();
 
         OffsetDateTime now = OffsetDateTime.now();
         List<RequestTagDocument> pendingTags = requestTagMongoRepository
                 .findByDateBeforeAndRequestsGreaterThanEqual(
                         now.minusDays(Long.parseLong(dateRange)),
-                        Integer.valueOf(minimumRequestProperties.getMinimumRequest())
+                        Integer.valueOf(requestTagAnalyzeProperties.getMinimumRequest())
                 );
 
         if(pendingTags.isEmpty()) {
-            throw new RuntimeException("No pending requests exist.");
+            throw new NoPendingTagException("No pending requests exist.");
         }
 
         List<TagAvailable> listTagsToBeSaved = pendingTags
@@ -60,7 +59,7 @@ public class RequestTagJob implements RequestTagPort {
         log.info("Deleting pending request tags: {}", pendingTags.size());
         requestTagMongoRepository.deleteAll(pendingTags);
 
-        log.info("Finished analyzing request tags");
+        log.info("Finished analyzing request tags: end time {}", OffsetDateTime.now());
     }
 
 }

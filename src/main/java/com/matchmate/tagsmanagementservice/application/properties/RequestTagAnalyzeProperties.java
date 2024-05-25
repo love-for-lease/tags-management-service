@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "app.analyse-periodic-request-tags.range-date-analyze")
+@ConfigurationProperties(prefix = "app.analyse-periodic-request-tags")
 @Getter
 @Setter
 @Component
-public class DateRangeAnalyzeProperties {
-    private String dateRangeDays;
+public class RequestTagAnalyzeProperties {
+    private String rangeDateAnalyze;
+    private String minimumRequest;
 }

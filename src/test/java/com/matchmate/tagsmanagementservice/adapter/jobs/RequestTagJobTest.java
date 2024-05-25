@@ -5,8 +5,7 @@ import com.matchmate.tagsmanagementservice.adapter.persistence.documents.Availab
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
-import com.matchmate.tagsmanagementservice.application.properties.DateRangeAnalyzeProperties;
-import com.matchmate.tagsmanagementservice.application.properties.MinimumRequestProperties;
+import com.matchmate.tagsmanagementservice.application.properties.RequestTagAnalyzeProperties;
 import com.matchmate.tagsmanagementservice.factories.tag.AvailableTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,10 +32,7 @@ class RequestTagJobTest {
     private TagAvailableStoragePortImpl tagAvailableStoragePortImpl;
 
     @Mock
-    private MinimumRequestProperties minimumRequestProperties;
-
-    @Mock
-    private DateRangeAnalyzeProperties dateRangeAnalyzeProperties;
+    private RequestTagAnalyzeProperties requestTagAnalyzeProperties;
 
 
     @InjectMocks
@@ -58,8 +54,8 @@ class RequestTagJobTest {
 
         when(requestTagMongoRepository.findByDateBeforeAndRequestsGreaterThanEqual(any(), any())).thenReturn(listOfRequestTagDocument);
         when(availableTagMongoRepository.saveAll(listOfAvailableTagDocument)).thenReturn(listOfAvailableTagDocument);
-        when(minimumRequestProperties.getMinimumRequest()).thenReturn("20");
-        when(dateRangeAnalyzeProperties.getDateRangeDays()).thenReturn("7");
+        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
+        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
 
         requestTagJob.analyzeRequestTags();
 
@@ -73,8 +69,8 @@ class RequestTagJobTest {
 
         String expectedErrorMessage = "No pending requests exist.";
 
-        when(minimumRequestProperties.getMinimumRequest()).thenReturn("20");
-        when(dateRangeAnalyzeProperties.getDateRangeDays()).thenReturn("7");
+        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
+        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> requestTagJob.analyzeRequestTags());
 
