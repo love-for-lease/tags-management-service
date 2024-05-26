@@ -1,7 +1,6 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
-import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
-import com.matchmate.tagsmanagementservice.domain.models.TagRequest;
+import com.matchmate.tagsmanagementservice.domain.models.tagrequest.TagRequest;
 import org.instancio.Instancio;
 import org.instancio.Model;
 

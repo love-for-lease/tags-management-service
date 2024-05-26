@@ -1,6 +1,5 @@
 package com.matchmate.tagsmanagementservice.adapter.persistence.documents;
 
-import com.matchmate.tagsmanagementservice.domain.models.TagRequest;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
