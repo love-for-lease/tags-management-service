@@ -1,11 +1,11 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
-import com.matchmate.tagsmanagementservice.adapter.persistence.TagAvailableStoragePortImpl;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.application.properties.RequestTagAnalyzeProperties;
+import com.matchmate.tagsmanagementservice.domain.ports.RegisterTagPort;
 import com.matchmate.tagsmanagementservice.factories.tag.AvailableTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class RequestTagJobTest {
     private AvailableTagMongoRepository availableTagMongoRepository;
 
     @Mock
-    private TagAvailableStoragePortImpl tagAvailableStoragePortImpl;
+    private RegisterTagPort registerTagPort;
 
     @Mock
     private RequestTagAnalyzeProperties requestTagAnalyzeProperties;
@@ -59,13 +59,13 @@ class RequestTagJobTest {
 
         requestTagJob.analyzeRequestTags();
 
-        verify(tagAvailableStoragePortImpl, times(1)).saveAll(anyList());
+        verify(registerTagPort, times(1)).register(anyList());
         verify(requestTagMongoRepository, times(1)).deleteAll(anyList());
         assertDoesNotThrow(() -> requestTagJob.analyzeRequestTags());
     }
 
     @Test
-    void analyzeRequestTags_ShouldThrowExceptionWhenNotExistingPendingRequestTags(){
+    void analyzeRequestTags_ShouldThrowExceptionWhenNotExistingPendingRequestTags() {
 
         String expectedErrorMessage = "No pending requests exist.";
 

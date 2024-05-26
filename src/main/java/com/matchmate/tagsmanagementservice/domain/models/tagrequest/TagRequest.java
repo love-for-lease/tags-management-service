@@ -1,4 +1,4 @@
-package com.matchmate.tagsmanagementservice.domain.models;
+package com.matchmate.tagsmanagementservice.domain.models.tagrequest;
 
 import lombok.Builder;
 import lombok.Getter;

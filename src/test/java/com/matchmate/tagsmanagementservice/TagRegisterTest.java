@@ -1,12 +1,17 @@
 package com.matchmate.tagsmanagementservice;
 
+import com.matchmate.tagsmanagementservice.common.domain.Identifier;
 import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 import com.matchmate.tagsmanagementservice.common.event.DomainEventPublisher;
 import com.matchmate.tagsmanagementservice.common.event.EventStore;
 import com.matchmate.tagsmanagementservice.common.event.EventStoreMongoRepository;
 import com.matchmate.tagsmanagementservice.common.event.StoredEvent;
-import com.matchmate.tagsmanagementservice.domain.models.Tag;
+import com.matchmate.tagsmanagementservice.domain.models.tag.Tag;
+import com.matchmate.tagsmanagementservice.domain.models.tag.TagId;
+import com.matchmate.tagsmanagementservice.factories.tag.TagFactory;
 import org.instancio.Instancio;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 class TagRegisterTest {
@@ -41,8 +47,8 @@ class TagRegisterTest {
     @Test
     @DisplayName("Should save events in event store When raise events")
     void raiseEvents_ShouldCallPublishAll_WithEventList() {
-        Tag tag = new Tag();
-        tag.register("Anime");
+        Tag tag = new Tag("Anime");
+        tag.register();
         var storedEvent = Instancio.createList(StoredEvent.class);
 
         when(eventStoreRepository.saveAll(storedEvent)).thenReturn(storedEvent);
@@ -55,8 +61,8 @@ class TagRegisterTest {
 
     @Test
     void raiseEvents_ShouldCallPublishAll_WithSingleList() {
-        Tag tag = new Tag();
-        tag.register("Anime");
+        Tag tag = new Tag("Anime");
+        tag.register();
         StoredEvent storedEvent = Instancio.create(StoredEvent.class);
         DomainEvent aDomainEvent = tag.getEvents().get(0);
 
@@ -70,9 +76,7 @@ class TagRegisterTest {
 
     @Test
     void publish_ShouldCallEventStoreAppend_WithSingleEvent() {
-        Tag tag = new Tag();
-        tag.register("Anime");
-        tag.register("LOL");
+        Tag tag = new Tag("Anime");
 
         domainEventPublisher.publishAll(tag.getEvents());
 
@@ -81,13 +85,21 @@ class TagRegisterTest {
 
     @Test
     void publishAll_ShouldCallEventStoreAppend_WithEventList() {
-        Tag tag = new Tag();
-        tag.register("Anime");
-        tag.register("LOL");
-        List<DomainEvent> events = Arrays.asList(tag.getEvents().get(0), tag.getEvents().get(1));
+        Tag tag = new Tag("LOL");
+        tag.register();
+        List<DomainEvent> events = Collections.singletonList(tag.getEvents().get(0));
 
         domainEventPublisher.publishAll(events);
 
         verify(eventStore).append(events);
+    }
+
+    @Test
+    void registerTag_ShouldAssignNonNullId_OfTypeTagId() {
+        Tag tag = TagFactory.withName("one piece");
+        tag.register();
+
+        assertNotNull(tag.getId().fromValue());
+        assertEquals(tag.getId().getClass(), TagId.class);
     }
 }

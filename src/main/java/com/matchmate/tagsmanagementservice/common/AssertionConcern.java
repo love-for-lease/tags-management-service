@@ -1,5 +1,7 @@
 package com.matchmate.tagsmanagementservice.common;
 
+import java.util.List;
+
 public class AssertionConcern {
 
     protected AssertionConcern() {
@@ -88,6 +90,18 @@ public class AssertionConcern {
 
     protected void assertStateTrue(boolean aBoolean, String aMessage) {
         if (!aBoolean) {
+            throw new IllegalStateException(aMessage);
+        }
+    }
+
+    protected void assertListNotEmpty(List aList, String aMessage) {
+        if (aList.isEmpty()) {
+            throw new IllegalStateException(aMessage);
+        }
+    }
+
+    protected void assertArgumentNotBlank(String aValue, String aMessage) {
+        if (aValue.isBlank()) {
             throw new IllegalStateException(aMessage);
         }
     }

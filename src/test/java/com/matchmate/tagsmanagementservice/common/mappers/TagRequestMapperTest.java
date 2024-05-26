@@ -3,7 +3,7 @@ package com.matchmate.tagsmanagementservice.common.mappers;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
-import com.matchmate.tagsmanagementservice.domain.models.TagRequest;
+import com.matchmate.tagsmanagementservice.domain.models.tagrequest.TagRequest;
 import com.matchmate.tagsmanagementservice.factories.tag.AvailableTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.TagRequestFactory;
