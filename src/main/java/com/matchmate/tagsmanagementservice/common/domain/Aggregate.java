@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public abstract class Aggregate {
+public abstract class Aggregate<ID extends Identifier> {
 
+    private ID id;
     private final List<DomainEvent> events = new ArrayList<>();
 
     public void raiseEvents() {

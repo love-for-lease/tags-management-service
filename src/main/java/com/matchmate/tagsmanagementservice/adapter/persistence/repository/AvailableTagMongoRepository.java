@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface AvailableTagMongoRepository extends MongoRepository<AvailableTagDocument, UUID> {
+    AvailableTagDocument findByName(String name);
 }

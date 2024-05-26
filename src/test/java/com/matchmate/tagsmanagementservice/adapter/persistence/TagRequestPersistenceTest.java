@@ -2,7 +2,7 @@ package com.matchmate.tagsmanagementservice.adapter.persistence;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
-import com.matchmate.tagsmanagementservice.domain.models.TagRequest;
+import com.matchmate.tagsmanagementservice.domain.models.tagrequest.TagRequest;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.TagRequestFactory;
 import org.junit.jupiter.api.BeforeEach;
