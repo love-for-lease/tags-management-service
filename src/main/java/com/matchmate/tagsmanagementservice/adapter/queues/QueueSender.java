@@ -1,4 +1,4 @@
-package com.matchmate.tagsmanagementservice.adapter.messaging;
+package com.matchmate.tagsmanagementservice.adapter.queues;
 
 import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 

@@ -1,6 +1,6 @@
 package com.matchmate.tagsmanagementservice.adapter.handlers;
 
-import com.matchmate.tagsmanagementservice.adapter.messaging.QueueSender;
+import com.matchmate.tagsmanagementservice.adapter.queues.QueueSender;
 import com.matchmate.tagsmanagementservice.application.properties.QueueProperties;
 import com.matchmate.tagsmanagementservice.common.event.DomainEventHandler;
 import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;

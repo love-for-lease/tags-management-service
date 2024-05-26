@@ -4,7 +4,6 @@ import com.matchmate.tagsmanagementservice.adapter.persistence.documents.Availab
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
 import com.matchmate.tagsmanagementservice.common.mappers.TagAvailableMapper;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
-import com.matchmate.tagsmanagementservice.domain.ports.TagAvailableStoragePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,11 +13,10 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
+public class TagAvailablePersistence {
 
     private final AvailableTagMongoRepository availableTagMongoRepository;
 
-    @Override
     public TagAvailable save(TagAvailable tagAvailable) {
         log.info("Saving tag available: {}", tagAvailable.getName());
 
@@ -29,7 +27,6 @@ public class TagAvailableStoragePortImpl implements TagAvailableStoragePort {
         return TagAvailableMapper.documentToTagAvailable(savedDocument);
     }
 
-    @Override
     public List<TagAvailable> saveAll(List<AvailableTagDocument> tags) {
         log.info("Saving tags available: {}", tags.size());
 

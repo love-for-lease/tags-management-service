@@ -1,6 +1,6 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
-import com.matchmate.tagsmanagementservice.adapter.persistence.TagAvailableStoragePortImpl;
+import com.matchmate.tagsmanagementservice.adapter.persistence.TagAvailablePersistence;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
@@ -29,11 +29,10 @@ class RequestTagJobTest {
     private AvailableTagMongoRepository availableTagMongoRepository;
 
     @Mock
-    private TagAvailableStoragePortImpl tagAvailableStoragePortImpl;
+    private TagAvailablePersistence tagAvailablePersistence;
 
     @Mock
     private RequestTagAnalyzeProperties requestTagAnalyzeProperties;
-
 
     @InjectMocks
     private RequestTagJob requestTagJob;
@@ -59,7 +58,7 @@ class RequestTagJobTest {
 
         requestTagJob.analyzeRequestTags();
 
-        verify(tagAvailableStoragePortImpl, times(1)).saveAll(anyList());
+        verify(tagAvailablePersistence, times(1)).saveAll(anyList());
         verify(requestTagMongoRepository, times(1)).deleteAll(anyList());
         assertDoesNotThrow(() -> requestTagJob.analyzeRequestTags());
     }

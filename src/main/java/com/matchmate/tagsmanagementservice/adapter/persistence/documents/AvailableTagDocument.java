@@ -15,7 +15,7 @@ import java.util.UUID;
 @Document("available-tag")
 public class AvailableTagDocument {
     @Id
-    private UUID id;
+    private String id;
     private final String name;
     private final TagStatus status;
     @Field("created_at")

@@ -10,9 +10,10 @@ public class TagRequestMapper {
 
     public static RequestTagDocument tagRequestToDocument(TagRequest tagRequest) {
 
-        return new RequestTagDocument(tagRequest.getName(),
-                tagRequest.getRequests(),
-                tagRequest.getRequestedAt());
+        return new RequestTagDocument(
+                tagRequest.getName(),
+                tagRequest.getRequestedAt(),
+                tagRequest.getRequests());
     }
 
     public static TagRequest documentToTagRequest(RequestTagDocument tagDocument) {

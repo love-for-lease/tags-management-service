@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "app.queue.events")
+@ConfigurationProperties(prefix = "app.events.queues")
 @Getter
 @Setter
 @Component

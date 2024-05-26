@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class TagRequestStoragePortImplTest {
+class TagRequestPersistenceTest {
     @Mock
     private RequestTagMongoRepository requestTagMongoRepository;
 
     @InjectMocks
-    private TagRequestStoragePortImpl tagRequestStoragePortImpl;
+    private TagRequestPersistence tagRequestPersistence;
 
     @BeforeEach
     void setUp() {
@@ -35,7 +35,7 @@ class TagRequestStoragePortImplTest {
 
         when(requestTagMongoRepository.save(any(RequestTagDocument.class))).thenReturn(savedDocument);
 
-        TagRequest result = tagRequestStoragePortImpl.save(tagRequest);
+        TagRequest result = tagRequestPersistence.save(tagRequest);
 
         assertEquals(tagRequest.getName(), result.getName());
     }
