@@ -1,6 +1,6 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
-import com.matchmate.tagsmanagementservice.domain.models.tagrequest.TagRequest;
+import com.matchmate.tagsmanagementservice.domain.models.tagrequest.RequestTag;
 import org.instancio.Instancio;
 import org.instancio.Model;
 
@@ -11,21 +11,26 @@ import static org.instancio.Select.field;
 
 public class TagRequestFactory {
 
-    private static final Model<TagRequest> TAG_REQUEST_MODEL = Instancio.of(TagRequest.class)
-            .generate(field(TagRequest::getRequests), gen -> gen.longs().range(0L, 20L))
-            .set(field(TagRequest::getRequestedAt), OffsetDateTime.now())
+    private static final Model<RequestTag> TAG_REQUEST_MODEL = Instancio.of(RequestTag.class)
+            .generate(field(RequestTag::getRequests), gen -> gen.longs().range(0L, 20L))
             .toModel();
 
-    public static TagRequest withValidName(String name) {
+    public static RequestTag withValidName(String name) {
         return Instancio.of(TAG_REQUEST_MODEL)
-                .set(field(TagRequest::getName), name)
+                .set(field(RequestTag::getName), name)
                 .create();
     }
 
-    public static List<TagRequest> withSizeAndDate(int size, OffsetDateTime date) {
+    public static List<RequestTag> withSizeAndDate(int size, OffsetDateTime date) {
         return Instancio.ofList(TAG_REQUEST_MODEL)
                 .size(size)
-                .set(field(TagRequest::getRequestedAt), date)
+                .create();
+    }
+
+    public static RequestTag withNameAndRequest(String name, Long requests) {
+        return Instancio.of(TAG_REQUEST_MODEL)
+                .set(field(RequestTag::getName), name)
+                .set(field(RequestTag::getRequests), requests)
                 .create();
     }
 }

@@ -11,7 +11,7 @@ public class TagRegisteredEvent extends DomainEvent {
     private final String name;
 
     public TagRegisteredEvent(String name) {
-        super(UUID.randomUUID().toString());
+        super(UUID.randomUUID().toString(), name);
         this.name = name;
     }
 

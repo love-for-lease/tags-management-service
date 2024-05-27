@@ -16,16 +16,19 @@ public class RegisterTagService extends AssertionConcern implements RegisterTagP
 
     @Override
     public void register(List<String> values) {
-        this.assertListNotEmpty(values, "tags values must not be empty.");
+
+        if(values.isEmpty()) {
+            throw new IllegalArgumentException("tags values must not be empty.");
+        }
 
         List<Tag> tags = values.stream().map(value -> new Tag(
                 value,
                 TagStatus.CREATED)).toList();
 
         tags.forEach(tag -> {
-            this.assertArgumentNotNull(tag.getName(), "tag name must not be null.");
             tag.register();
             tag.raiseEvent();
         });
+        tagPersistencePort.save(tags);
     }
 }

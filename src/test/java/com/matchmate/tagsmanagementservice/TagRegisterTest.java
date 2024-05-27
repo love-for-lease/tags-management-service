@@ -1,6 +1,5 @@
 package com.matchmate.tagsmanagementservice;
 
-import com.matchmate.tagsmanagementservice.common.domain.Identifier;
 import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 import com.matchmate.tagsmanagementservice.common.event.DomainEventPublisher;
 import com.matchmate.tagsmanagementservice.common.event.EventStore;
@@ -8,7 +7,6 @@ import com.matchmate.tagsmanagementservice.common.event.EventStoreMongoRepositor
 import com.matchmate.tagsmanagementservice.common.event.StoredEvent;
 import com.matchmate.tagsmanagementservice.domain.models.tag.Tag;
 import com.matchmate.tagsmanagementservice.domain.models.tag.TagId;
-import com.matchmate.tagsmanagementservice.factories.tag.TagFactory;
 import org.instancio.Instancio;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,13 +14,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +33,9 @@ class TagRegisterTest {
     @Mock
     private EventStoreMongoRepository eventStoreRepository;
 
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
+
     private DomainEventPublisher domainEventPublisher;
 
     @BeforeEach
@@ -42,6 +44,7 @@ class TagRegisterTest {
 
         domainEventPublisher = DomainEventPublisher.instance();
         ReflectionTestUtils.setField(domainEventPublisher, "eventStore", eventStore);
+        ReflectionTestUtils.setField(domainEventPublisher, "applicationEventPublisher", applicationEventPublisher);
     }
 
     @Test
@@ -66,6 +69,7 @@ class TagRegisterTest {
         StoredEvent storedEvent = Instancio.create(StoredEvent.class);
         DomainEvent aDomainEvent = tag.getEvents().get(0);
 
+        doNothing().when(applicationEventPublisher).publishEvent(aDomainEvent);
         when(eventStoreRepository.save(storedEvent)).thenReturn(storedEvent);
         when(eventStore.append(aDomainEvent)).thenReturn(storedEvent);
 
@@ -96,7 +100,7 @@ class TagRegisterTest {
 
     @Test
     void registerTag_ShouldAssignNonNullId_OfTypeTagId() {
-        Tag tag = TagFactory.withName("one piece");
+        Tag tag = new Tag("one piece");
         tag.register();
 
         assertNotNull(tag.getId().fromValue());

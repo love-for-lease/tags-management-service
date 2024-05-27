@@ -11,10 +11,16 @@ public class Tag extends Aggregate<TagId> {
     private TagStatus status;
 
     public Tag(String name) {
+        super(new TagId());
+        this.assertArgumentNotBlank(name, "tag name must not be blank.");
         this.name = name;
     }
 
     public Tag(String name, TagStatus status) {
+        super(new TagId());
+
+        this.assertArgumentNotBlank(name, "tag name must not be blank.");
+        this.assertArgumentNotBlank(status.name(), "tag status must not be blank.");
         this.name = name;
         this.status = status;
     }

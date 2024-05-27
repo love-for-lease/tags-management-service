@@ -16,7 +16,11 @@ spring:
     aws:
       region:
         static: ${AWS_REGION:sa-east-1}
-      endpoint: ${AWS_ENDPOINT:localhost:4566}
+      credentials:
+        access-key: test
+        secret-key: test
+      cloudwatch:
+        endpoint: ${AWS_ENDPOINT:localhost:4566}
 
 springdoc:
   swagger-ui:
@@ -40,8 +44,8 @@ app:
     region: ${AWS_REGION:sa-east-1}
     endpoint: ${AWS_ENDPOINT:http://localhost:4566}
   analyse-periodic-request-tags:
-    rangeDateAnalyze: 7
-    minimumRequest: 20
+    range-date-analyze: 7
+    minimum-request: 20
     cron: 0 0 12 1,16 * ?
 
 
@@ -56,4 +60,4 @@ logging:
   level:
     io:
       awspring:
-        cloud: debug
+        cloud: info
