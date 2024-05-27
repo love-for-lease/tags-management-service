@@ -8,4 +8,8 @@ public class RequestTagId extends Identifier<UUID> {
     protected RequestTagId() {
         super(UUID.randomUUID());
     }
+
+    protected RequestTagId(UUID id) {
+        super(id);
+    }
 }
