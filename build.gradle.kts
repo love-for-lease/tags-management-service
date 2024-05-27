@@ -167,6 +167,7 @@ dependencies {
     implementation("org.pitest:pitest-junit5-plugin:1.2.1")
 
     //Others
+    implementation("com.github.mvallim:java-fluent-validator:1.10.0")
     compileOnly("org.aspectj:aspectjweaver:1.9.6")
     compileOnly("org.projectlombok:lombok")
     compileOnly("com.google.code.gson:gson:2.1")

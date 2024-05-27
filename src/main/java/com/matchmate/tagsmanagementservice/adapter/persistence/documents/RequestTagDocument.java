@@ -1,47 +1,24 @@
 package com.matchmate.tagsmanagementservice.adapter.persistence.documents;
 
-import lombok.Builder;
+import static java.time.ZoneOffset.UTC;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
-
 
 @Getter
 @Document("request-tag")
+@RequiredArgsConstructor
 public class RequestTagDocument {
     @Id
-    private String id;
-    private String name;
-    private Long requests;
+    private final String id;
+    private final String name;
+    private final Long requests;
     @Field("requested_at")
     @CreatedDate
-    private OffsetDateTime requestedAt;
-
-    public RequestTagDocument(String id, String name, OffsetDateTime requestedAt, Long requests) {
-        this.id = id;
-        this.name = name;
-        this.requests = (requests != null) ? requests : 1L ;
-        this.requestedAt = requestedAt;
-    }
-
-    public RequestTagDocument(String name) {
-        this.name = name;
-        this.requests = 1L ;
-    }
-
-    public RequestTagDocument(String name, OffsetDateTime requestedAt, Long requests) {
-        this.id = id;
-        this.name = name;
-        this.requests = (requests != null) ? requests : 1L ;
-        this.requestedAt = requestedAt;
-    }
-    public RequestTagDocument incrementRequest() {
-        requests++;
-        return this;
-    }
+    private final OffsetDateTime requestedAt = OffsetDateTime.now(UTC);
 }

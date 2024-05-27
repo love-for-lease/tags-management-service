@@ -15,7 +15,7 @@ public class RequestTagMessageFactory {
 
     public static RequestTagMessage withValidName(String name) {
         return Instancio.of(REQUEST_TAG_MESSAGE_MODEL)
-                .set(field(RequestTagMessage::getName), name)
+                .set(field(RequestTagMessage::name), name)
                 .create();
     }
 

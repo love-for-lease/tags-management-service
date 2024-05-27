@@ -1,9 +1,12 @@
 package com.matchmate.tagsmanagementservice.adapter.handlers;
 
+import com.matchmate.tagsmanagementservice.adapter.FortuneFirstRequestTagVisitor;
 import com.matchmate.tagsmanagementservice.adapter.exceptions.InvalidMessageException;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.adapter.queues.messages.RequestTagMessage;
+import com.matchmate.tagsmanagementservice.domain.models.tagrequest.RequestTag;
+import com.matchmate.tagsmanagementservice.domain.ports.ReceiveRequestTagPort;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFactory;
 import com.matchmate.tagsmanagementservice.factories.tag.RequestTagMessageFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +29,12 @@ class RegisterRequestTagConsumerHandlerTest {
     @Mock
     private RequestTagMongoRepository requestTagMongoRepository;
 
+    @Mock
+    private ReceiveRequestTagPort receiveRequestTagPort;
+
+    @Mock
+    private FortuneFirstRequestTagVisitor fortuneFirstRequestTagVisitor;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -36,14 +45,12 @@ class RegisterRequestTagConsumerHandlerTest {
 
         RequestTagMessage invalidMessage = RequestTagMessageFactory.withValidName(" ");
 
-        Exception exception = assertThrows(InvalidMessageException.class, () -> {
-            registerRequestTagConsumerHandler.handler(invalidMessage);
-        });
+        Exception exception = assertThrows(IllegalStateException.class, () ->
+                registerRequestTagConsumerHandler.handler(invalidMessage.name()));
 
-        String expectedMessage = "Request name wasn't informed";
-        String actualMessage = exception.getMessage();
+        String expectedMessage = "request tag name must not be blank.";
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
@@ -51,26 +58,34 @@ class RegisterRequestTagConsumerHandlerTest {
 
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
         RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithName("TEST_MESSAGE");
+        RequestTag requestTag = new RequestTag(validMessage.name(), 1L);
 
-        when(requestTagMongoRepository.findByName(validMessage.getName())).thenReturn(Optional.of(existingDocument));
+        when(requestTagMongoRepository.findByName(validMessage.name())).thenReturn(Optional.of(existingDocument));
+        when(receiveRequestTagPort.save(any(RequestTag.class))).thenReturn(requestTag);
 
-        registerRequestTagConsumerHandler.handler(validMessage);
+        registerRequestTagConsumerHandler.handler(validMessage.name());
 
-        verify(requestTagMongoRepository, times(1)).save(any(RequestTagDocument.class));
-        verify(requestTagMongoRepository, times(1)).findByName(validMessage.getName());
+        verify(receiveRequestTagPort, times(1)).save(any(RequestTag.class));
+        verify(requestTagMongoRepository, times(1)).findByName(validMessage.name());
+
+        assertNotNull(requestTag.getId());
     }
 
     @Test
     void handler_ShouldCreateNewRequestWhenRequestDoesNotExist() {
 
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
+        var requestTag = new RequestTag(validMessage.name(), 1L);
 
-        when(requestTagMongoRepository.findByName(validMessage.getName())).thenReturn(Optional.empty());
+        when(requestTagMongoRepository.findByName(validMessage.name())).thenReturn(Optional.empty());
+        when(fortuneFirstRequestTagVisitor.visit(any(RequestTag.class))).thenReturn(requestTag);
+        when(receiveRequestTagPort.save(any(RequestTag.class))).thenReturn(requestTag);
 
-        registerRequestTagConsumerHandler.handler(validMessage);
+        registerRequestTagConsumerHandler.handler(validMessage.name());
 
-        verify(requestTagMongoRepository, times(1)).save(any(RequestTagDocument.class));
-        verify(requestTagMongoRepository, times(1)).findByName(validMessage.getName());
+        verify(receiveRequestTagPort, times(1)).save(any(RequestTag.class));
+        verify(requestTagMongoRepository, times(1)).findByName(validMessage.name());
+
+        assertNotNull(requestTag.getId());
     }
-
 }

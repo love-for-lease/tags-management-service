@@ -1,9 +1,11 @@
 package com.matchmate.tagsmanagementservice.adapter.queues.messages;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
-@Data
-public class RequestTagMessage {
-    private String name;
+@Validated
+public record RequestTagMessage(
+        @NotBlank
+        String name
+) {
 }

@@ -7,25 +7,21 @@ import com.matchmate.tagsmanagementservice.domain.models.tag.Tag;
 
 import java.util.List;
 
-public class TagAvailableMapper {
+public class AvailableTagMapper {
+
+    private AvailableTagMapper() {
+    }
 
     public static AvailableTagDocument tagAvailableToDocument(TagAvailable tagAvailable) {
         return new AvailableTagDocument(tagAvailable.getName(), tagAvailable.getStatus());
     }
 
     public static TagAvailable documentToTagAvailable(AvailableTagDocument tagDocument) {
-        return TagAvailable
-                .builder()
-                .status(tagDocument.getStatus())
-                .name(tagDocument.getName())
-                .build();
+        return new TagAvailable(tagDocument.getName(), tagDocument.getStatus());
     }
 
     public static TagAvailable requestToTagAvailable(RequestTagDocument request) {
-        return TagAvailable
-                .builder()
-                .name(request.getName())
-                .build();
+        return new TagAvailable(request.getName());
     }
 
 
@@ -34,7 +30,7 @@ public class TagAvailableMapper {
     }
 
     public static List<AvailableTagDocument> fromDomain(List<Tag> tags) {
-        return tags.stream().map(TagAvailableMapper::fromDomain).toList();
+        return tags.stream().map(AvailableTagMapper::fromDomain).toList();
     }
 
     public static Tag fromDocument(AvailableTagDocument availableTagDocument) {

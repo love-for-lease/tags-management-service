@@ -60,4 +60,4 @@ logging:
   level:
     io:
       awspring:
-        cloud: debug
+        cloud: info

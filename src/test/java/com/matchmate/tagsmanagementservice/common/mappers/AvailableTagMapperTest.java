@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TagAvailableMapperTest {
+class AvailableTagMapperTest {
 
     @Test
     void tagAvailableToDocument_ShouldMapTagAvailableToDocument_AndVerifyDocumentFields() {
         TagAvailable tagAvailable = TagAvailableFactory.withValidName("TEST_TAG");
 
-        AvailableTagDocument result = TagAvailableMapper.tagAvailableToDocument(tagAvailable);
+        AvailableTagDocument result = AvailableTagMapper.tagAvailableToDocument(tagAvailable);
 
         assertEquals(tagAvailable.getName(), result.getName());
         assertEquals(tagAvailable.getStatus(), result.getStatus());
@@ -26,7 +26,7 @@ class TagAvailableMapperTest {
     void documentToTagAvailable_ShouldMapDocumentToTagAvailable_AndVerifyTagAvailableFields() {
         AvailableTagDocument tagDocument = AvailableTagDocumentFactory.validWithName("TEST_TAG");
 
-        TagAvailable result = TagAvailableMapper.documentToTagAvailable(tagDocument);
+        TagAvailable result = AvailableTagMapper.documentToTagAvailable(tagDocument);
 
         assertEquals(tagDocument.getName(), result.getName());
         assertEquals(tagDocument.getStatus(), result.getStatus());
@@ -37,7 +37,7 @@ class TagAvailableMapperTest {
         RequestTagDocument requestTag = RequestTagDocumentFactory.validWithName("TEST_TAG");
 
 
-        TagAvailable result = TagAvailableMapper.requestToTagAvailable(requestTag);
+        TagAvailable result = AvailableTagMapper.requestToTagAvailable(requestTag);
 
         assertEquals(requestTag.getName(), result.getName());
     }

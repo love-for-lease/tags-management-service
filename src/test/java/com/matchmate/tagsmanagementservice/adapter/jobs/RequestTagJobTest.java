@@ -36,7 +36,7 @@ class RequestTagJobTest {
 
 
     @InjectMocks
-    private RequestTagJob requestTagJob;
+    private TagRequestJob tagRequestJob;
 
 
     @BeforeEach
@@ -57,11 +57,11 @@ class RequestTagJobTest {
         when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
         when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
 
-        requestTagJob.analyzeRequestTags();
+        tagRequestJob.analyzeRequestTags();
 
         verify(registerTagPort, times(1)).register(anyList());
         verify(requestTagMongoRepository, times(1)).deleteAll(anyList());
-        assertDoesNotThrow(() -> requestTagJob.analyzeRequestTags());
+        assertDoesNotThrow(() -> tagRequestJob.analyzeRequestTags());
     }
 
     @Test
@@ -72,7 +72,7 @@ class RequestTagJobTest {
         when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
         when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> requestTagJob.analyzeRequestTags());
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> tagRequestJob.analyzeRequestTags());
 
         assertEquals(expectedErrorMessage, runtimeException.getMessage());
     }

@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.common.domain;
 
+import com.matchmate.tagsmanagementservice.common.AssertionConcern;
 import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 import com.matchmate.tagsmanagementservice.common.event.DomainEventPublisher;
 import lombok.Getter;
@@ -9,10 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public abstract class Aggregate<ID extends Identifier> {
+public abstract class Aggregate<ID extends Identifier> extends AssertionConcern {
 
-    private ID id;
+    private final ID id;
     private final List<DomainEvent> events = new ArrayList<>();
+
+    protected Aggregate(ID id) {
+        this.id = id;
+    }
 
     public void raiseEvents() {
         DomainEventPublisher.instance().publishAll(Optional.of(this.events)

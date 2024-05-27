@@ -1,17 +1,19 @@
 package com.matchmate.tagsmanagementservice.domain.models;
 
 import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
-import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.time.OffsetDateTime;
 
 @Getter
-@Builder
 public class TagAvailable {
-    private String name;
+    private final String name;
     private TagStatus status;
-    @Field("created_at")
-    private OffsetDateTime createdAt;
+
+    public TagAvailable(String name, TagStatus status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public TagAvailable(String name) {
+        this.name = name;
+    }
 }

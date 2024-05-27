@@ -12,14 +12,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RequestTagsConsumer {
+public class RequestTagConsumer {
 
     private final RegisterRequestTagConsumerHandler registerRequestTagConsumerHandler;
 
     @SqsListener("${app.events.queues.tag-registered-queue}")
     public void receiveRequestTag(RequestTagMessage requestTagMessage, @Headers MessageHeaders headers) {
-        log.info("Received message: {}, messageId: {}", requestTagMessage.getName(), headers.get(MessageHeaders.ID));
-
-        registerRequestTagConsumerHandler.handler(requestTagMessage);
+        log.info("Received message: {}, messageId: {}", requestTagMessage.name(), headers.get(MessageHeaders.ID));
+        registerRequestTagConsumerHandler.handler(requestTagMessage.name());
     }
 }
