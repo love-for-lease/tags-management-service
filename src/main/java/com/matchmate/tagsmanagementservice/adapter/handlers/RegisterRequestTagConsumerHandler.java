@@ -23,7 +23,7 @@ public class RegisterRequestTagConsumerHandler {
 
     public void handler(String requestName) {
         log.info("Checking if request already exist with name: {}", requestName);
-        Optional<RequestTagDocument> requestTagDocument = requestTagMongoRepository.findByName(requestName);
+        Optional<RequestTagDocument> requestTagDocument = requestTagMongoRepository.findByNameIgnoreCase(requestName);
 
         if (requestTagDocument.isPresent()) {
             log.info("Request already exists, increasing request");

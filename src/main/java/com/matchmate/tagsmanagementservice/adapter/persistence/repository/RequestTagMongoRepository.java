@@ -17,4 +17,6 @@ public interface RequestTagMongoRepository extends MongoRepository<RequestTagDoc
     List<RequestTagDocument> findByDateBeforeAndRequestsGreaterThanEqual(OffsetDateTime dateRange, Integer minimumRequest);
 
     Optional<RequestTagDocument> findByName(String name);
+
+    Optional<RequestTagDocument> findByNameIgnoreCase(String name);
 }
