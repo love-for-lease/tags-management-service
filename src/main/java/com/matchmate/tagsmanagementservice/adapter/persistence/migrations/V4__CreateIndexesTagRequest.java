@@ -18,7 +18,6 @@ public class V4__CreateIndexesTagRequest {
     public void changeSet() {
         IndexOperations indexOps = mongoTemplate.indexOps("request-tag");
         indexOps.ensureIndex(new Index("name", Sort.Direction.DESC)
-                .unique()
                 .background());
         indexOps.ensureIndex(new Index("requested_at", Sort.Direction.DESC).background());
     }

@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,6 +35,9 @@ class RegisterRequestTagConsumerHandlerTest {
 
     @Mock
     private FortuneFirstRequestTagVisitor fortuneFirstRequestTagVisitor;
+
+    @Mock
+    private UUID uuid;
 
     @BeforeEach
     void setUp() {
@@ -57,7 +61,7 @@ class RegisterRequestTagConsumerHandlerTest {
     void handler_ShouldIncreaseRequestCountWhenRequestExists() {
 
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
-        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithName("TEST_MESSAGE");
+        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_MESSAGE", UUID.randomUUID());
         RequestTag requestTag = new RequestTag(validMessage.name(), 1L);
 
         when(requestTagMongoRepository.findByName(validMessage.name())).thenReturn(Optional.of(existingDocument));
