@@ -27,10 +27,10 @@ public class RequestTagDocumentFactory {
                 .set(field(RequestTagDocument::getName), name)
                 .create();
     }
-    public static RequestTagDocument validWithNameAndId(String name, UUID id) {
+    public static RequestTagDocument validWithNameAndId(String name) {
         return Instancio.of(REQUEST_TAG_DOCUMENT_MODEL)
                 .set(field(RequestTagDocument::getName), name)
-                .set(field(RequestTagDocument::getId), id.toString())
+                .set(field(RequestTagDocument::getId), UUID.randomUUID().toString())
                 .create();
     }
 

@@ -61,7 +61,7 @@ class RegisterRequestTagConsumerHandlerTest {
     void handler_ShouldIncreaseRequestCountWhenRequestExists() {
 
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
-        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_MESSAGE", UUID.randomUUID());
+        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_MESSAGE");
         RequestTag requestTag = new RequestTag(validMessage.name(), 1L);
 
         when(requestTagMongoRepository.findByNameIgnoreCase(validMessage.name())).thenReturn(Optional.of(existingDocument));
