@@ -24,4 +24,5 @@ public class RequestTagMessageFactory {
                 .size(size)
                 .create();
     }
+
 }

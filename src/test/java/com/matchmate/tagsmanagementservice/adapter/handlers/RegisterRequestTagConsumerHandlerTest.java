@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,6 +35,9 @@ class RegisterRequestTagConsumerHandlerTest {
 
     @Mock
     private FortuneFirstRequestTagVisitor fortuneFirstRequestTagVisitor;
+
+    @Mock
+    private UUID uuid;
 
     @BeforeEach
     void setUp() {
@@ -57,16 +61,16 @@ class RegisterRequestTagConsumerHandlerTest {
     void handler_ShouldIncreaseRequestCountWhenRequestExists() {
 
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
-        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithName("TEST_MESSAGE");
+        RequestTagDocument existingDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_MESSAGE");
         RequestTag requestTag = new RequestTag(validMessage.name(), 1L);
 
-        when(requestTagMongoRepository.findByName(validMessage.name())).thenReturn(Optional.of(existingDocument));
+        when(requestTagMongoRepository.findByNameIgnoreCase(validMessage.name())).thenReturn(Optional.of(existingDocument));
         when(receiveRequestTagPort.save(any(RequestTag.class))).thenReturn(requestTag);
 
         registerRequestTagConsumerHandler.handler(validMessage.name());
 
         verify(receiveRequestTagPort, times(1)).save(any(RequestTag.class));
-        verify(requestTagMongoRepository, times(1)).findByName(validMessage.name());
+        verify(requestTagMongoRepository, times(1)).findByNameIgnoreCase(validMessage.name());
 
         assertNotNull(requestTag.getId());
     }
@@ -77,14 +81,14 @@ class RegisterRequestTagConsumerHandlerTest {
         RequestTagMessage validMessage = RequestTagMessageFactory.withValidName("TEST_MESSAGE");
         var requestTag = new RequestTag(validMessage.name(), 1L);
 
-        when(requestTagMongoRepository.findByName(validMessage.name())).thenReturn(Optional.empty());
+        when(requestTagMongoRepository.findByNameIgnoreCase(validMessage.name())).thenReturn(Optional.empty());
         when(fortuneFirstRequestTagVisitor.visit(any(RequestTag.class))).thenReturn(requestTag);
         when(receiveRequestTagPort.save(any(RequestTag.class))).thenReturn(requestTag);
 
         registerRequestTagConsumerHandler.handler(validMessage.name());
 
         verify(receiveRequestTagPort, times(1)).save(any(RequestTag.class));
-        verify(requestTagMongoRepository, times(1)).findByName(validMessage.name());
+        verify(requestTagMongoRepository, times(1)).findByNameIgnoreCase(validMessage.name());
 
         assertNotNull(requestTag.getId());
     }

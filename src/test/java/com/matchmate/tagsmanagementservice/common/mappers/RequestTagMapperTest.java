@@ -9,6 +9,9 @@ import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFacto
 import com.matchmate.tagsmanagementservice.factories.tag.TagRequestFactory;
 import org.junit.jupiter.api.Test;
 
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RequestTagMapperTest {
@@ -18,16 +21,17 @@ class RequestTagMapperTest {
 
         RequestTag requestTag = TagRequestFactory.withValidName("TEST_TAG");
 
-        RequestTagDocument result = RequestTagMapper.toDocument(requestTag);
+        RequestTagDocument result = RequestTagMapper.toDocument(requestTag, OffsetDateTime.now());
 
         assertEquals(requestTag.getName(), result.getName());
+        assertEquals(requestTag.getId().fromValue(), result.getId());
         assertEquals(requestTag.getRequests(), result.getRequests());
     }
 
     @Test
     void documentToTagRequest_ShouldStoreTagRegisteredEvent_AndVerifyEventBodyContainsTagName() {
 
-        RequestTagDocument tagDocument = RequestTagDocumentFactory.validWithName("TEST_TAG");
+        RequestTagDocument tagDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_TAG");
 
         RequestTag result = RequestTagMapper.toDomain(tagDocument);
 
