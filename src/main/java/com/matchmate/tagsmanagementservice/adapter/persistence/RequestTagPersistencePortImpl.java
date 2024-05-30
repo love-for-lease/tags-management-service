@@ -1,6 +1,5 @@
 package com.matchmate.tagsmanagementservice.adapter.persistence;
 
-import com.matchmate.tagsmanagementservice.adapter.exceptions.RequestTagNotFoundException;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.common.mappers.RequestTagMapper;
@@ -9,7 +8,6 @@ import com.matchmate.tagsmanagementservice.domain.ports.RequestTagPersistencePor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Component
@@ -25,8 +23,9 @@ public class RequestTagPersistencePortImpl implements RequestTagPersistencePort 
                 RequestTagMapper.toDocument(requestTag, requestTagDocument.getRequestedAt()))
         );
 
-        requestTagMongoRepository.save(
-                RequestTagMapper.toDocumentWithoutRequestAt(requestTag));
-
+        if(requestTagByName.isEmpty()) {
+            requestTagMongoRepository.save(
+                    RequestTagMapper.toDocumentWithoutRequestAt(requestTag));
+        }
     }
 }

@@ -26,7 +26,9 @@ public class RequestTagMapper {
         return new RequestTagDocument(
                 requestTag.getId().fromValue(),
                 requestTag.getName(),
-                requestTag.getRequests());
+                requestTag.getRequests(),
+                OffsetDateTime.now()
+        );
     }
 
     public static RequestTag toDomain(RequestTagDocument tagDocument) {
