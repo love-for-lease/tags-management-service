@@ -25,15 +25,15 @@ public class RegisterRequestTagConsumerHandler {
         log.info("Checking if request already exist with name: {}", requestName);
         Optional<RequestTagDocument> requestTagDocument = requestTagMongoRepository.findByNameIgnoreCase(requestName);
 
-        if (requestTagDocument.isPresent()) {
+        requestTagDocument.ifPresentOrElse(tag -> {
             log.info("Request already exists, increasing request");
-            receiveRequestTagPort.save(RequestTagMapper.toDomain(requestTagDocument.get()));
-        } else {
+            receiveRequestTagPort.save(RequestTagMapper.toDomain(tag));
+        }, () -> {
             log.info("Creating first request tag: {}", requestName);
             RequestTag requestTag = new RequestTag(requestName);
             requestTag.accept(fortuneFirstRequestTagVisitor);
             receiveRequestTagPort.save(requestTag);
             log.info("Create request: {}", requestName);
-        }
+        });
     }
 }
