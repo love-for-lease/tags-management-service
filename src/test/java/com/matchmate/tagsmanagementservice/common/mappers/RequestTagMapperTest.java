@@ -24,13 +24,14 @@ class RequestTagMapperTest {
         RequestTagDocument result = RequestTagMapper.toDocument(requestTag, OffsetDateTime.now());
 
         assertEquals(requestTag.getName(), result.getName());
+        assertEquals(requestTag.getId().fromValue(), result.getId());
         assertEquals(requestTag.getRequests(), result.getRequests());
     }
 
     @Test
     void documentToTagRequest_ShouldStoreTagRegisteredEvent_AndVerifyEventBodyContainsTagName() {
 
-        RequestTagDocument tagDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_TAG", UUID.randomUUID());
+        RequestTagDocument tagDocument = RequestTagDocumentFactory.validWithNameAndId("TEST_TAG");
 
         RequestTag result = RequestTagMapper.toDomain(tagDocument);
 

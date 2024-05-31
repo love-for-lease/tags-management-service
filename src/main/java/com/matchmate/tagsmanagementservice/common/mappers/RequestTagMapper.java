@@ -21,13 +21,6 @@ public class RequestTagMapper {
                 requestAt);
     }
 
-    public static RequestTagDocument toDocumentWithoutRequestAt(RequestTag requestTag) {
-
-        return new RequestTagDocument(
-                requestTag.getId().fromValue(),
-                requestTag.getName(),
-                requestTag.getRequests());
-    }
 
     public static RequestTag toDomain(RequestTagDocument tagDocument) {
         return new RequestTag(tagDocument.getId(), tagDocument.getName(), tagDocument.getRequests());
