@@ -19,7 +19,7 @@ public class RequestTagDocument {
     private Long requests;
     @Field("requested_at")
     @CreatedDate
-    private OffsetDateTime requestedAt = OffsetDateTime.now(UTC);
+    private OffsetDateTime requestedAt;
 
     public RequestTagDocument(String id, String name, Long requests, OffsetDateTime requestedAt) {
         this.id = id;
