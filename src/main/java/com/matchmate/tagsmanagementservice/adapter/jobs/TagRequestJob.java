@@ -5,16 +5,17 @@ import com.matchmate.tagsmanagementservice.adapter.persistence.documents.Request
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.application.properties.RequestTagAnalyzeProperties;
 import com.matchmate.tagsmanagementservice.domain.ports.RegisterTagPort;
-import static java.time.ZoneOffset.UTC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class TagRequestJob {
 
     private final RequestTagMongoRepository requestTagMongoRepository;
@@ -23,7 +24,7 @@ public class TagRequestJob {
 
     @Scheduled(cron = "${app.analyse-periodic-request-tags.cron}")
     public void analyzeRequestTags() {
-        OffsetDateTime currentDate = OffsetDateTime.now(UTC);
+        ZonedDateTime currentDate = ZonedDateTime.now();
 
         log.info("Analyzing request tags: start time {}", currentDate);
 
@@ -43,6 +44,6 @@ public class TagRequestJob {
         log.info("Deleting pending request tags: {}", requestTags.size());
         requestTagMongoRepository.deleteAll(requestTags);
 
-        log.info("Finished analyzing request tags: end time {}", OffsetDateTime.now());
+        log.info("Finished analyzing request tags: end time {}", ZonedDateTime.now());
     }
 }

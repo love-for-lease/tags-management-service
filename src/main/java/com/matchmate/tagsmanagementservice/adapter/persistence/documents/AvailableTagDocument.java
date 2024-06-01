@@ -1,14 +1,13 @@
 package com.matchmate.tagsmanagementservice.adapter.persistence.documents;
 
 import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
-import static java.time.ZoneOffset.UTC;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Getter
 @Document("available-tag")
@@ -18,8 +17,7 @@ public class AvailableTagDocument {
     private final String name;
     private final TagStatus status;
     @Field("created_at")
-    @CreatedDate
-    private final OffsetDateTime createdAt = OffsetDateTime.now(UTC);
+    private final ZonedDateTime createdAt = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
     public AvailableTagDocument(String name, TagStatus status) {
         this.name = name;

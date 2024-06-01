@@ -9,8 +9,7 @@ import com.matchmate.tagsmanagementservice.factories.tag.RequestTagDocumentFacto
 import com.matchmate.tagsmanagementservice.factories.tag.TagRequestFactory;
 import org.junit.jupiter.api.Test;
 
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +20,7 @@ class RequestTagMapperTest {
 
         RequestTag requestTag = TagRequestFactory.withValidName("TEST_TAG");
 
-        RequestTagDocument result = RequestTagMapper.toDocument(requestTag, OffsetDateTime.now());
+        RequestTagDocument result = RequestTagMapper.toDocument(requestTag, ZonedDateTime.now());
 
         assertEquals(requestTag.getName(), result.getName());
         assertEquals(requestTag.getId().fromValue(), result.getId());

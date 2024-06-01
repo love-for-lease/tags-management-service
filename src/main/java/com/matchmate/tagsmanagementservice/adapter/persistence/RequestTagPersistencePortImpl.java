@@ -8,7 +8,7 @@ import com.matchmate.tagsmanagementservice.domain.ports.RequestTagPersistencePor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Component
@@ -26,7 +26,7 @@ public class RequestTagPersistencePortImpl implements RequestTagPersistencePort 
 
         if(requestTagByName.isEmpty()) {
             requestTagMongoRepository.save(
-                    RequestTagMapper.toDocument(requestTag, OffsetDateTime.now()));
+                    RequestTagMapper.toDocument(requestTag, ZonedDateTime.now()));
         }
     }
 }
