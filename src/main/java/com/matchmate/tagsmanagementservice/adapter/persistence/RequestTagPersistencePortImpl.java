@@ -20,13 +20,8 @@ public class RequestTagPersistencePortImpl implements RequestTagPersistencePort 
     public void save(RequestTag requestTag) {
         Optional<RequestTagDocument> requestTagByName = requestTagMongoRepository.findByName(requestTag.getName());
 
-        requestTagByName.ifPresent(requestTagDocument -> requestTagMongoRepository.save(
-                RequestTagMapper.toDocument(requestTag, requestTagDocument.getRequestedAt()))
-        );
-
-        if(requestTagByName.isEmpty()) {
-            requestTagMongoRepository.save(
-                    RequestTagMapper.toDocument(requestTag, ZonedDateTime.now()));
-        }
+        requestTagByName.ifPresentOrElse(requestTagDocument -> requestTagMongoRepository.save(
+                RequestTagMapper.toDocument(requestTag, requestTagDocument.getRequestedAt())), () ->
+                requestTagMongoRepository.save(RequestTagMapper.toDocument(requestTag, ZonedDateTime.now())));
     }
 }
