@@ -1,6 +1,7 @@
 package com.matchmate.tagsmanagementservice.common.event;
 
-import com.matchmate.tagsmanagementservice.common.AssertionConcern;
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentLength;
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotEmpty;
 import com.matchmate.tagsmanagementservice.common.serializer.EventSerializer;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 @Document
 @Getter
-public class StoredEvent extends AssertionConcern {
+public class StoredEvent {
 
     @Id
     private UUID eventId;
@@ -91,8 +92,8 @@ public class StoredEvent extends AssertionConcern {
     }
 
     protected void setEventBody(String anEventBody) {
-        this.assertArgumentNotEmpty(anEventBody, "The event body is required.");
-        this.assertArgumentLength(anEventBody, 1, 65000, "The event body must be 65000 characters or less.");
+        assertArgumentNotEmpty(anEventBody, "The event body is required.");
+        assertArgumentLength(anEventBody, 1, 65000, "The event body must be 65000 characters or less.");
 
         this.eventBody = anEventBody;
     }
@@ -106,8 +107,8 @@ public class StoredEvent extends AssertionConcern {
     }
 
     protected void setTypeName(String aTypeName) {
-        this.assertArgumentNotEmpty(aTypeName, "The event type name is required.");
-        this.assertArgumentLength(aTypeName, 1, 100, "The event type name must be 100 characters or less.");
+        assertArgumentNotEmpty(aTypeName, "The event type name is required.");
+        assertArgumentLength(aTypeName, 1, 100, "The event type name must be 100 characters or less.");
 
         this.typeName = aTypeName;
     }

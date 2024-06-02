@@ -11,7 +11,7 @@ import java.util.UUID;
 public class TagRegisteredEventFactory {
     private static final Model<TagRegisteredEvent> TAG_REGISTERED_EVENT_MODEL = Instancio.of(TagRegisteredEvent.class)
             .set(field(TagRegisteredEvent::getId), UUID.randomUUID().toString())
-            .generate(field(TagRegisteredEvent::getName), gen -> gen.oneOf("pizza", "anime", "tecnologia"))
+            .generate(field(TagRegisteredEvent::getTagName), gen -> gen.oneOf("pizza", "anime", "tecnologia"))
             .toModel();
 
     public static TagRegisteredEvent valid() {
@@ -20,7 +20,7 @@ public class TagRegisteredEventFactory {
 
     public static TagRegisteredEvent validWithName(String name) {
         return Instancio.of(TAG_REGISTERED_EVENT_MODEL)
-                .set(field(TagRegisteredEvent::getName), name)
+                .set(field(TagRegisteredEvent::getTagName), name)
                 .create();
     }
 

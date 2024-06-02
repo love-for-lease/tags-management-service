@@ -5,7 +5,7 @@ import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
 import org.instancio.Instancio;
 import org.instancio.Model;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.instancio.Select.field;
@@ -14,7 +14,7 @@ public class AvailableTagDocumentFactory {
     private static final Model<AvailableTagDocument> AVAILABLE_TAG_DOCUMENT_MODEL =
             Instancio.of(AvailableTagDocument.class)
                     .generate(field(AvailableTagDocument::getStatus), gen -> gen.enumOf(TagStatus.class))
-                    .set(field(AvailableTagDocument::getCreatedAt), OffsetDateTime.now())
+                    .set(field(AvailableTagDocument::getCreatedAt), ZonedDateTime.now())
                     .toModel();
 
     public static AvailableTagDocument validWithName(String name) {
