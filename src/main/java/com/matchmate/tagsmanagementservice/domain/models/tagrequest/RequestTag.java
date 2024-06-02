@@ -1,5 +1,7 @@
 package com.matchmate.tagsmanagementservice.domain.models.tagrequest;
 
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotBlank;
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotNull;
 import com.matchmate.tagsmanagementservice.common.domain.Aggregate;
 import com.matchmate.tagsmanagementservice.common.visitor.Visitable;
 import com.matchmate.tagsmanagementservice.common.visitor.Visitor;
@@ -14,22 +16,22 @@ public class RequestTag extends Aggregate<RequestTagId> implements Visitable<Req
 
     public RequestTag(String name) {
         super(new RequestTagId());
-        this.assertArgumentNotBlank(name, "request tag name must not be blank.");
+        assertArgumentNotBlank(name, "request tag name must not be blank.");
         this.name = name;
     }
 
     public RequestTag(String name, Long requests) {
         super(new RequestTagId());
-        this.assertArgumentNotBlank(name, "request tag name must not be blank.");
-        this.assertArgumentNotNull(requests, "requests must not be null.");
+        assertArgumentNotBlank(name, "request tag name must not be blank.");
+        assertArgumentNotNull(requests, "requests must not be null.");
         this.name = name;
         this.requests = requests;
     }
 
     public RequestTag(String id, String name, Long requests) {
         super(new RequestTagId(UUID.fromString(id)));
-        this.assertArgumentNotBlank(name, "request tag name must not be blank.");
-        this.assertArgumentNotNull(requests, "requests must not be null.");
+        assertArgumentNotBlank(name, "request tag name must not be blank.");
+        assertArgumentNotNull(requests, "requests must not be null.");
         this.name = name;
         this.requests = requests;
     }

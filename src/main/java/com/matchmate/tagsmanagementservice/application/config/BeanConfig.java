@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.application.config;
 
+import com.matchmate.tagsmanagementservice.adapter.handlers.TagsRegisteredEventHandler;
 import com.matchmate.tagsmanagementservice.adapter.persistence.RequestTagPersistencePortImpl;
 import com.matchmate.tagsmanagementservice.adapter.persistence.AvailableTagPersistencePortImpl;
 import com.matchmate.tagsmanagementservice.domain.models.tag.RegisterTagService;
@@ -12,9 +13,10 @@ public class BeanConfig {
 
     @Bean
     public RegisterTagService registerTagService(
-            AvailableTagPersistencePortImpl availableTagPersistencePortImpl
+            AvailableTagPersistencePortImpl availableTagPersistencePortImpl,
+            TagsRegisteredEventHandler tagsRegisteredEventHandler
     ) {
-        return new RegisterTagService(availableTagPersistencePortImpl);
+        return new RegisterTagService(availableTagPersistencePortImpl, tagsRegisteredEventHandler);
     }
 
     @Bean

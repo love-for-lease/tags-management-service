@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
+import com.matchmate.tagsmanagementservice.adapter.exceptions.NoPendingTagException;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
@@ -14,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,10 +55,10 @@ class RequestTagJobTest {
         List<AvailableTagDocument> listOfAvailableTagDocument = AvailableTagDocumentFactory.withSize(2);
 
 
-        when(requestTagMongoRepository.findByDateBeforeAndRequestsGreaterThanEqual(any(), any())).thenReturn(listOfRequestTagDocument);
+        when(requestTagMongoRepository.findByRequestedAtBetween(any(), any())).thenReturn(listOfRequestTagDocument);
         when(availableTagMongoRepository.saveAll(listOfAvailableTagDocument)).thenReturn(listOfAvailableTagDocument);
-        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
-        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
+        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn(20);
+        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn(7);
 
         tagRequestJob.analyzeRequestTags();
 
@@ -69,8 +72,10 @@ class RequestTagJobTest {
 
         String expectedErrorMessage = "No pending requests exist.";
 
-        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn("20");
-        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn("7");
+        when(requestTagAnalyzeProperties.getMinimumRequest()).thenReturn(20);
+        when(requestTagAnalyzeProperties.getRangeDateAnalyze()).thenReturn(7);
+        when(requestTagMongoRepository.findByRequestedAtBetween(eq(7), any(LocalDateTime.class)))
+                .thenReturn(new ArrayList<>());
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> tagRequestJob.analyzeRequestTags());
 

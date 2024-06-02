@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 public class RequestTagAnalyzeProperties {
-    private String rangeDateAnalyze;
-    private String minimumRequest;
+    private Integer rangeDateAnalyze;
+    private Integer minimumRequest;
 }

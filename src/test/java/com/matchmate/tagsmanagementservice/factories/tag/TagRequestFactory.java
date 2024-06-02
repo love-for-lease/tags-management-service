@@ -4,7 +4,7 @@ import com.matchmate.tagsmanagementservice.domain.models.tagrequest.RequestTag;
 import org.instancio.Instancio;
 import org.instancio.Model;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.instancio.Select.field;
@@ -21,7 +21,7 @@ public class TagRequestFactory {
                 .create();
     }
 
-    public static List<RequestTag> withSizeAndDate(int size, OffsetDateTime date) {
+    public static List<RequestTag> withSizeAndDate(int size, ZonedDateTime date) {
         return Instancio.ofList(TAG_REQUEST_MODEL)
                 .size(size)
                 .create();

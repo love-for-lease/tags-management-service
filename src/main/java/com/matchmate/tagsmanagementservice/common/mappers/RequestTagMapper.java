@@ -5,20 +5,28 @@ import com.matchmate.tagsmanagementservice.adapter.persistence.documents.Request
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import com.matchmate.tagsmanagementservice.domain.models.tagrequest.RequestTag;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 public class RequestTagMapper {
 
     private RequestTagMapper() {
     }
 
-    public static RequestTagDocument toDocument(RequestTag requestTag, OffsetDateTime requestAt) {
+    public static RequestTagDocument toDocument(RequestTag requestTag, ZonedDateTime requestAt) {
 
         return new RequestTagDocument(
                 requestTag.getId().fromValue(),
                 requestTag.getName(),
                 requestTag.getRequests(),
                 requestAt);
+    }
+
+    public static RequestTagDocument toDocument(RequestTag requestTag) {
+
+        return new RequestTagDocument(
+                requestTag.getId().fromValue(),
+                requestTag.getName(),
+                requestTag.getRequests());
     }
 
 

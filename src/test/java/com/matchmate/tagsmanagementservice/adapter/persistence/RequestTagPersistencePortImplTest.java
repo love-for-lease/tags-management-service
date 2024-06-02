@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,11 +36,11 @@ class RequestTagPersistencePortImplTest {
     void testSave_WhenRequestTagExists() {
         RequestTag requestTag = new RequestTag("sushi", 2L);
 
+
         RequestTagDocument existingDocument = new RequestTagDocument(UUID.randomUUID().toString(),
                 "sushi",
                 1L,
-                OffsetDateTime.now());
-
+                ZonedDateTime.now());
         when(requestTagMongoRepository.findByName("sushi")).thenReturn(Optional.of(existingDocument));
 
         requestTagPersistencePortImpl.save(requestTag);
