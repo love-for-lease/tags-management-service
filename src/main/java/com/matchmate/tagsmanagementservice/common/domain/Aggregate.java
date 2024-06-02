@@ -1,37 +1,31 @@
 package com.matchmate.tagsmanagementservice.common.domain;
 
-import com.matchmate.tagsmanagementservice.common.AssertionConcern;
-import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
-import com.matchmate.tagsmanagementservice.common.event.DomainEventPublisher;
+import com.matchmate.tagsmanagementservice.common.observer.Observable;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Getter
-public abstract class Aggregate<ID extends Identifier> extends AssertionConcern {
+public abstract class Aggregate<ID extends Identifier> extends Observable {
 
     private final ID id;
-    private final List<DomainEvent> events = new ArrayList<>();
 
     protected Aggregate(ID id) {
+        super();
         this.id = id;
     }
 
-    public void raiseEvents() {
-        DomainEventPublisher.instance().publishAll(Optional.of(this.events)
-                .orElseThrow(() -> new RuntimeException("not have events")));
-        this.clearEvents();
-    }
-
-    public void raiseEvent() {
-        DomainEventPublisher.instance().publish(this.events.stream().findFirst()
-                .orElseThrow(() -> new RuntimeException("not have events")));
-        this.clearEvents();
-    }
-
-    public void clearEvents() {
-        this.events.clear();
-    }
+//    public void raiseEvents() {
+//        DomainEventPublisher.instance().publishAll(Optional.of(this.events)
+//                .orElseThrow(() -> new RuntimeException("not have events")));
+//        this.clearEvents();
+//    }
+//
+//    public void raiseEvent() {
+//        DomainEventPublisher.instance().publish(this.events.stream().findFirst()
+//                .orElseThrow(() -> new RuntimeException("not have events")));
+//        this.clearEvents();
+//    }
+//
+//    public void clearEvents() {
+//        this.events.clear();
+//    }
 }

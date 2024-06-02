@@ -1,6 +1,7 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
 import com.matchmate.tagsmanagementservice.adapter.exceptions.NoPendingTagException;
+import com.matchmate.tagsmanagementservice.adapter.handlers.TagsRegisteredEventHandler;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;
 import com.matchmate.tagsmanagementservice.application.properties.RequestTagAnalyzeProperties;
@@ -21,6 +22,7 @@ public class TagRequestJob {
     private final RequestTagMongoRepository requestTagMongoRepository;
     private final RequestTagAnalyzeProperties requestTagAnalyzeProperties;
     private final RegisterTagPort registerTagPort;
+    private final TagsRegisteredEventHandler queue;
 
     @Scheduled(cron = "${app.analyse-periodic-request-tags.cron}")
     public void analyzeRequestTags() {
@@ -28,22 +30,16 @@ public class TagRequestJob {
 
         log.info("Analyzing request tags: start time {}", currentDate);
 
-        String dateRange = requestTagAnalyzeProperties.getRangeDateAnalyze();
-
         List<RequestTagDocument> requestTags = requestTagMongoRepository
-                .findByDateBeforeAndRequestsGreaterThanEqual(
-                        currentDate.minusDays(Long.parseLong(dateRange)),
-                        Integer.valueOf(requestTagAnalyzeProperties.getMinimumRequest()));
+                .findByRequestedAtBetween(requestTagAnalyzeProperties.getMinimumRequest(),
+                        currentDate.minusDays(requestTagAnalyzeProperties.getRangeDateAnalyze()).toLocalDateTime());
 
-        if(requestTags.isEmpty()) {
+        if (requestTags.isEmpty()) {
             throw new NoPendingTagException("No pending requests exist.");
         }
-
         registerTagPort.register(requestTags.stream().map(RequestTagDocument::getName).toList());
 
         log.info("Deleting pending request tags: {}", requestTags.size());
         requestTagMongoRepository.deleteAll(requestTags);
-
-        log.info("Finished analyzing request tags: end time {}", ZonedDateTime.now());
     }
 }

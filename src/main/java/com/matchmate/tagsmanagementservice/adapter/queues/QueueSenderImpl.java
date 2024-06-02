@@ -21,10 +21,10 @@ public class QueueSenderImpl implements QueueSender {
     @Override
     public void send(String queueName, DomainEvent payload) {
         try {
-            SendResult<String> result = sqsTemplate.send(to -> to.queue(queueName)
+            var result = sqsTemplate.send(to -> to.queue(queueName)
                     .payload(ObjectSerializer.instance().serialize(payload))
                     .delaySeconds(10));
-            log.info(String.format("MessageId: %s", result.messageId()));
+            log.info("MessageId: {} queueName: {} EventPaylod: {}", result.messageId(), queueName, payload);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

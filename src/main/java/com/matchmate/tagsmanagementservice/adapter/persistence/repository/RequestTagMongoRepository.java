@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,8 +13,8 @@ import java.util.UUID;
 @Repository
 public interface RequestTagMongoRepository extends MongoRepository<RequestTagDocument, UUID> {
 
-    @Query("{ 'requested_at': { $lt: ?0 }, 'requests': { $gt: ?1 } }")
-    List<RequestTagDocument> findByDateBeforeAndRequestsGreaterThanEqual(ZonedDateTime dateTime, Integer minimumRequest);
+    @Query("{ 'requests': { $gte: ?0 }, 'requested_at': { $gte: ?1 } }")
+    List<RequestTagDocument> findByRequestedAtBetween(Integer minimumRequest, LocalDateTime dateTime);
 
     Optional<RequestTagDocument> findByName(String name);
 

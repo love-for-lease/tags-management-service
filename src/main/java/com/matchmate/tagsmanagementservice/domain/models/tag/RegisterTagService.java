@@ -1,34 +1,40 @@
 package com.matchmate.tagsmanagementservice.domain.models.tag;
 
-import com.matchmate.tagsmanagementservice.common.AssertionConcern;
-import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
+import com.matchmate.tagsmanagementservice.common.event.DomainEventHandler;
+import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
 import com.matchmate.tagsmanagementservice.domain.ports.RegisterTagPort;
 import com.matchmate.tagsmanagementservice.domain.ports.TagPersistencePort;
 
 import java.util.List;
 
-public class RegisterTagService extends AssertionConcern implements RegisterTagPort {
+public class RegisterTagService implements RegisterTagPort {
     private final TagPersistencePort tagPersistencePort;
+    private final DomainEventHandler<TagRegisteredEvent> domainEventHandler;
 
-    public RegisterTagService(TagPersistencePort tagPersistencePort) {
+    public RegisterTagService(TagPersistencePort tagPersistencePort, DomainEventHandler<TagRegisteredEvent> domainEventHandler) {
         this.tagPersistencePort = tagPersistencePort;
+        this.domainEventHandler = domainEventHandler;
     }
 
     @Override
     public void register(List<String> values) {
 
-        if(values.isEmpty()) {
+        if (values.isEmpty()) {
             throw new IllegalArgumentException("tags values must not be empty.");
         }
 
-        List<Tag> tags = values.stream().map(value -> new Tag(
-                value,
-                TagStatus.CREATED)).toList();
+        List<Tag> tags = values.stream().map(Tag::new).toList();
 
-        tags.forEach(tag -> {
-            tag.register();
-            tag.raiseEvent();
-        });
         tagPersistencePort.save(tags);
+
+        tags.forEach(t -> t.register(TagRegisteredEvent.class.getSimpleName(), data ->
+                domainEventHandler.handleEvent((TagRegisteredEvent) data)));
+        tags.forEach(Tag::register);
+    }
+
+    public static void passHere() {
+        System.out.println("passei por aqui");
     }
 }
+
+

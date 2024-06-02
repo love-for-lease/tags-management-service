@@ -51,7 +51,8 @@ app:
 
   events:
     queues:
-      tag-registered-queue: ${TAGS_REGISTERED_QUEUE:teste}
+      tag-request-queue: ${TAG_REQUEST_QUEUE:tag-request-queue}
+      tag-registered-queue: ${TAGS_REGISTERED_QUEUE:tag-registered-queue}
 
 
 logging:

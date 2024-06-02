@@ -1,5 +1,6 @@
 package com.matchmate.tagsmanagementservice.domain.models.tag;
 
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotBlank;
 import com.matchmate.tagsmanagementservice.common.domain.Aggregate;
 import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
 import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
@@ -12,20 +13,21 @@ public class Tag extends Aggregate<TagId> {
 
     public Tag(String name) {
         super(new TagId());
-        this.assertArgumentNotBlank(name, "tag name must not be blank.");
+        assertArgumentNotBlank(name, "tag name must not be blank.");
         this.name = name;
     }
 
     public Tag(String name, TagStatus status) {
         super(new TagId());
 
-        this.assertArgumentNotBlank(name, "tag name must not be blank.");
-        this.assertArgumentNotBlank(status.name(), "tag status must not be blank.");
+        assertArgumentNotBlank(name, "tag name must not be blank.");
+        assertArgumentNotBlank(status.name(), "tag status must not be blank.");
         this.name = name;
         this.status = status;
     }
 
     public void register() {
-        this.getEvents().add(new TagRegisteredEvent(this.name));
+        this.status = TagStatus.CREATED;
+        this.notify(new TagRegisteredEvent(this.name));
     }
 }

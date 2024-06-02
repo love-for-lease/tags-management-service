@@ -16,7 +16,7 @@ public class RequestTagConsumer {
 
     private final RegisterRequestTagConsumerHandler registerRequestTagConsumerHandler;
 
-    @SqsListener("${app.events.queues.tag-registered-queue}")
+    @SqsListener("${app.events.queues.tag-request-queue}")
     public void receiveRequestTag(RequestTagMessage requestTagMessage, @Headers MessageHeaders headers) {
         log.info("Received message: {}, messageId: {}", requestTagMessage.name(), headers.get(MessageHeaders.ID));
         registerRequestTagConsumerHandler.handler(requestTagMessage.name());
