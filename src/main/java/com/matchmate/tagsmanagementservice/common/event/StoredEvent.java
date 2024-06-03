@@ -15,7 +15,7 @@ import java.util.UUID;
 public class StoredEvent {
 
     @Id
-    private UUID eventId;
+    private String eventId;
     private String eventBody;
     private LocalDateTime occurredOn;
     private String typeName;
@@ -28,7 +28,7 @@ public class StoredEvent {
         this.setTypeName(aTypeName);
     }
 
-    public StoredEvent(String aTypeName, LocalDateTime anOccurredOn, String anEventBody, UUID anEventId) {
+    public StoredEvent(String aTypeName, LocalDateTime anOccurredOn, String anEventBody, String anEventId) {
         this(aTypeName, anOccurredOn, anEventBody);
 
         this.setEventId(anEventId);
@@ -41,7 +41,7 @@ public class StoredEvent {
         return this.eventBody;
     }
 
-    public UUID eventId() {
+    public String eventId() {
         return this.eventId;
     }
 
@@ -98,7 +98,7 @@ public class StoredEvent {
         this.eventBody = anEventBody;
     }
 
-    protected void setEventId(UUID anEventId) {
+    protected void setEventId(String anEventId) {
         this.eventId = anEventId;
     }
 
