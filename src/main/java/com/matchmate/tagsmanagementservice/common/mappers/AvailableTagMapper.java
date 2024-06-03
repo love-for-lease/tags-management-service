@@ -26,7 +26,11 @@ public class AvailableTagMapper {
 
 
     public static AvailableTagDocument fromDomain(Tag tag) {
-        return new AvailableTagDocument(tag.getName(), tag.getStatus());
+        return new AvailableTagDocument(
+                tag.getId().fromValue(),
+                tag.getName(),
+                tag.getStatus()
+        );
     }
 
     public static List<AvailableTagDocument> fromDomain(List<Tag> tags) {
