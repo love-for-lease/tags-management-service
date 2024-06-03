@@ -23,7 +23,7 @@ public class EventStoreImpl implements EventStore {
                 aDomainEvent.getClass().getName(),
                 aDomainEvent.occurredOn(),
                 eventSerialization,
-                UUID.fromString(aDomainEvent.getId())
+                aDomainEvent.getId()
         );
 
         return eventStoreRepository.save(storedEvent);
@@ -38,7 +38,7 @@ public class EventStoreImpl implements EventStore {
                         event.getClass().getName(),
                         event.occurredOn(),
                         eventsSerialization,
-                        UUID.fromString(event.getId())))
+                        event.getId()))
                 .toList();
 
         return eventStoreRepository.saveAll(storedEventsToPersistence);

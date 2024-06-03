@@ -31,10 +31,6 @@ public class RegisterTagService implements RegisterTagPort {
                 domainEventHandler.handleEvent((TagRegisteredEvent) data)));
         tags.forEach(Tag::register);
     }
-
-    public static void passHere() {
-        System.out.println("passei por aqui");
-    }
 }
 
 

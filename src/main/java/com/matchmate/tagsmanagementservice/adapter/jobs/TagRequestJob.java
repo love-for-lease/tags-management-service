@@ -24,7 +24,7 @@ public class TagRequestJob {
     private final RegisterTagPort registerTagPort;
     private final TagsRegisteredEventHandler queue;
 
-    @Scheduled(cron = "${app.analyse-periodic-request-tags.cron}")
+    @Scheduled(fixedRate = 5000)
     public void analyzeRequestTags() {
         ZonedDateTime currentDate = ZonedDateTime.now();
 

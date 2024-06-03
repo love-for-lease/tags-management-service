@@ -19,6 +19,12 @@ public class AvailableTagDocument {
     @Field("created_at")
     private final ZonedDateTime createdAt = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
+    public AvailableTagDocument(String id, String name, TagStatus status) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+    }
+
     public AvailableTagDocument(String name, TagStatus status) {
         this.name = name;
         this.status = status;
