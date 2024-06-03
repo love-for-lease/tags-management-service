@@ -1,0 +1,62 @@
+server:
+  port: 7000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: tags-management-service
+  mvc:
+    static-path-pattern: /swagger*
+  data:
+    mongodb:
+      uri: ${MONGO_DATABASE_URI:mongodb://tags-management-service:tags-management-service@localhost:27017/}
+      database: ${MONGO_DATABASE_DATABASE:admin}
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:sa-east-1}
+      credentials:
+        access-key: test
+        secret-key: test
+      cloudwatch:
+        endpoint: ${AWS_ENDPOINT:localhost:4566}
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+mongock:
+  migration-scan-package:
+    - com.matchmate.tagsmanagementservice.adapter.persistence.migrations
+
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ['health','metrics', 'prometheus']
+
+app:
+  aws:
+    region: ${AWS_REGION:sa-east-1}
+    endpoint: ${AWS_ENDPOINT:http://localhost:4566}
+  analyse-periodic-request-tags:
+    range-date-analyze: 7
+    minimum-request: 20
+    cron: 0 0 12 1,16 * ?
+
+
+  events:
+    queues:
+      tag-request-queue: ${TAG_REQUEST_QUEUE:tag-request-queue}
+      tag-registered-queue: ${TAGS_REGISTERED_QUEUE:tag-registered-queue}
+
+
+logging:
+  level:
+    io:
+      awspring:
+        cloud: info
