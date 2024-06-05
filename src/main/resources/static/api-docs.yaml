@@ -1,24 +1,230 @@
 openapi: 3.0.0
 info:
-  title: tags-management-service
   version: '1.0'
+  title: tags-management-service
   description: 'Esta API recebe solicitações de inclusão de tags, armazena e, após validação, disponibiliza para os usuários finais. Além disso, oferece dados para a criação de dashboards, permitindo uma melhor compreensão do comportamento dos usuários finais.'
 servers:
   - url: 'http://localhost:7000'
-paths: {}
+paths:
+  /api/tags/request:
+    get:
+      summary: Get pageable of request tags
+      description: 'This endpoint returns an pageable of request tags and pending tags '
+      operationId: get-api-tags-request
+      parameters:
+        - name: page
+          in: query
+          description: page of request
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: quantity of tags per page
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: 'Sorted by '
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RequestTagDto'
+                  pageable:
+                    type: object
+                    properties:
+                      pageNumber:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      sort:
+                        type: object
+                        properties:
+                          sorted:
+                            type: boolean
+                          empty:
+                            type: boolean
+                          unsorted:
+                            type: boolean
+                      offset:
+                        type: integer
+                      paged:
+                        type: boolean
+                      unpaged:
+                        type: boolean
+                  last:
+                    type: boolean
+                  totalElements:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  first:
+                    type: boolean
+                  size:
+                    type: integer
+                  number:
+                    type: integer
+                  sort:
+                    type: object
+                    properties:
+                      sorted:
+                        type: boolean
+                      empty:
+                        type: boolean
+                      unsorted:
+                        type: boolean
+                  numberOfElements:
+                    type: integer
+                  empty:
+                    type: boolean
+              examples:
+                Example 1:
+                  value:
+                    content:
+                      - id: '1'
+                        name: REQUEST_TAG
+                        email: request@example.com
+                      - id: 055ae853-c257-4cd8-8f45-4ae17f7d8e2b
+                        name: Jane Doe
+                        email: jane.doe@example.com
+                    pageable:
+                      sort:
+                        sorted: true
+                        unsorted: false
+                        empty: false
+                      offset: 0
+                      pageNumber: 0
+                      pageSize: 2
+                      paged: true
+                      unpaged: false
+                    totalPages: 1
+                    totalElements: 2
+                    last: true
+                    size: 2
+                    number: 0
+                    sort:
+                      sorted: true
+                      unsorted: false
+                      empty: false
+                    numberOfElements: 2
+                    first: true
+                    empty: false
+      servers:
+        - url: 'http://localhost:7000'
+  /api/tags/available:
+    get:
+      summary: Get pageable of available tags
+      description: This endpoint returns an pageable of available tags
+      operationId: get-api-tags-available
+      parameters:
+        - name: page
+          in: query
+          description: page of available request
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: quantity of tags per page
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AvailableTagDto'
+                  pageable:
+                    type: object
+                    properties:
+                      pageNumber:
+                        type: integer
+                      pageSize:
+                        type: integer
+                      sort:
+                        type: object
+                        properties:
+                          sorted:
+                            type: boolean
+                          empty:
+                            type: boolean
+                          unsorted:
+                            type: boolean
+                      offset:
+                        type: integer
+                      paged:
+                        type: boolean
+                      unpaged:
+                        type: boolean
+                  last:
+                    type: boolean
+                  totalElements:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  first:
+                    type: boolean
+                  size:
+                    type: integer
+                  number:
+                    type: integer
+                  sort:
+                    type: object
+                    properties:
+                      sorted:
+                        type: boolean
+                      empty:
+                        type: boolean
+                      unsorted:
+                        type: boolean
+                  numberOfElements:
+                    type: integer
+                  empty:
+                    type: boolean
+      servers:
+        - url: 'http://localhost:7000'
 components:
   schemas:
-    ErrorResponse:
-      title: ErrorResponse
+    RequestTagDto:
       type: object
+      title: RequestTagDto
       properties:
-        type:
+        id:
           type: string
-        message:
+        name:
           type: string
-        details:
-          type: object
-      required:
-        - type
-        - message
-        - details
+        requests:
+          type: integer
+        requestAt:
+          type: string
+          format: date-time
+    AvailableTagDto:
+      type: object
+      title: AvailableTagDto
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - test
+            - test1
+        createAt:
+          type: string
+          format: date-time
