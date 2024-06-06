@@ -38,7 +38,7 @@ paths:
                   content:
                     type: array
                     items:
-                      $ref: '#/components/schemas/RequestTagDto'
+                      $ref: '#/components/schemas/RequestTag'
                   pageable:
                     type: object
                     properties:
@@ -147,7 +147,7 @@ paths:
                   content:
                     type: array
                     items:
-                      $ref: '#/components/schemas/AvailableTagDto'
+                      $ref: '#/components/schemas/AvailableTag'
                   pageable:
                     type: object
                     properties:
@@ -199,9 +199,23 @@ paths:
         - url: 'http://localhost:7000'
 components:
   schemas:
-    RequestTagDto:
+    ErrorResponse:
+      title: ErrorResponse
       type: object
-      title: RequestTagDto
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+      required:
+        - type
+        - message
+        - details
+    RequestTag:
+      type: object
+      title: RequestTag
       properties:
         id:
           type: string
@@ -212,9 +226,9 @@ components:
         requestAt:
           type: string
           format: date-time
-    AvailableTagDto:
+    AvailableTag:
       type: object
-      title: AvailableTagDto
+      title: AvailableTag
       properties:
         id:
           type: string
