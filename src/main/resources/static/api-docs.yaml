@@ -6,27 +6,33 @@ info:
 servers:
   - url: 'http://localhost:7000'
 paths:
-  /api/tags/request:
+  /api/v1/request-tags:
     get:
       summary: Get pageable of request tags
-      description: 'This endpoint returns an pageable of request tags and pending tags '
+      description: 'This endpoint returns a pageable list of request tags, with the tags that have the most requests. By default, the query returns 10 items.'
       operationId: get-api-tags-request
       parameters:
         - name: page
           in: query
-          description: page of request
+          description: Page of request tags
           schema:
             type: integer
+            default: 10
+            example: 15
         - name: size
           in: query
-          description: quantity of tags per page
+          description: Quantity elements per page
           schema:
             type: integer
+            default: 1
+            example: 1
         - name: sort
           in: query
           description: 'Sorted by '
           schema:
             type: string
+            default: 'request, asc'
+            example: 'requestAt, asc'
       responses:
         '200':
           description: OK
@@ -42,9 +48,9 @@ paths:
                   pageable:
                     type: object
                     properties:
-                      pageNumber:
+                      page_number:
                         type: integer
-                      pageSize:
+                      page_size:
                         type: integer
                       sort:
                         type: object
@@ -63,9 +69,9 @@ paths:
                         type: boolean
                   last:
                     type: boolean
-                  totalElements:
+                  total_elements:
                     type: integer
-                  totalPages:
+                  total_pages:
                     type: integer
                   first:
                     type: boolean
@@ -82,7 +88,7 @@ paths:
                         type: boolean
                       unsorted:
                         type: boolean
-                  numberOfElements:
+                  number_of_elements:
                     type: integer
                   empty:
                     type: boolean
@@ -120,22 +126,33 @@ paths:
                     empty: false
       servers:
         - url: 'http://localhost:7000'
-  /api/tags/available:
+  /api/v1/available-tags:
     get:
       summary: Get pageable of available tags
-      description: This endpoint returns an pageable of available tags
+      description: 'This endpoint returns an pageable of available tags, By default, the query returns 10 items.'
       operationId: get-api-tags-available
       parameters:
         - name: page
           in: query
-          description: page of available request
+          description: Page of available request
           schema:
             type: string
+            default: '1'
+            example: '1'
         - name: size
           in: query
-          description: quantity of tags per page
+          description: Quantity of tags per page
           schema:
             type: string
+            default: '10'
+            example: '15'
+        - name: sort
+          in: query
+          description: Sorted by
+          schema:
+            type: string
+            default: 'request, asc'
+            example: 'requestAt, asc'
       responses:
         '200':
           description: OK
@@ -151,9 +168,9 @@ paths:
                   pageable:
                     type: object
                     properties:
-                      pageNumber:
+                      page_number:
                         type: integer
-                      pageSize:
+                      page_size:
                         type: integer
                       sort:
                         type: object
@@ -172,9 +189,9 @@ paths:
                         type: boolean
                   last:
                     type: boolean
-                  totalElements:
+                  total_elements:
                     type: integer
-                  totalPages:
+                  total_pages:
                     type: integer
                   first:
                     type: boolean
@@ -191,7 +208,7 @@ paths:
                         type: boolean
                       unsorted:
                         type: boolean
-                  numberOfElements:
+                  number_of_elements:
                     type: integer
                   empty:
                     type: boolean
@@ -199,20 +216,6 @@ paths:
         - url: 'http://localhost:7000'
 components:
   schemas:
-    ErrorResponse:
-      title: ErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-      required:
-        - type
-        - message
-        - details
     RequestTag:
       type: object
       title: RequestTag
@@ -242,3 +245,17 @@ components:
         createAt:
           type: string
           format: date-time
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+      required:
+        - type
+        - message
+        - details
