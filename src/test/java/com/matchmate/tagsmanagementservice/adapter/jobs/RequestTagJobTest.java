@@ -1,6 +1,5 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
-import com.matchmate.tagsmanagementservice.adapter.exceptions.NoPendingTagException;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.AvailableTagMongoRepository;
@@ -77,8 +76,6 @@ class RequestTagJobTest {
         when(requestTagMongoRepository.findByRequestedAtBetween(eq(7), any(LocalDateTime.class)))
                 .thenReturn(new ArrayList<>());
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> tagRequestJob.analyzeRequestTags());
-
-        assertEquals(expectedErrorMessage, runtimeException.getMessage());
+        verify(registerTagPort, times(0)).register(anyList());
     }
 }

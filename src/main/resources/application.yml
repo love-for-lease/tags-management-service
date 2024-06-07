@@ -6,6 +6,8 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: tags-management-service
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   mvc:
     static-path-pattern: /swagger*
   data:

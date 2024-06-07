@@ -24,7 +24,7 @@ public class TagRequestJob {
     private final RegisterTagPort registerTagPort;
     private final TagsRegisteredEventHandler queue;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "${app.analyse-periodic-request-tags.cron}")
     public void analyzeRequestTags() {
         ZonedDateTime currentDate = ZonedDateTime.now();
 
@@ -35,7 +35,8 @@ public class TagRequestJob {
                         currentDate.minusDays(requestTagAnalyzeProperties.getRangeDateAnalyze()).toLocalDateTime());
 
         if (requestTags.isEmpty()) {
-            throw new NoPendingTagException("No pending requests exist.");
+            log.info("No pending requests exist.");
+            return;
         }
         registerTagPort.register(requestTags.stream().map(RequestTagDocument::getName).toList());
 
