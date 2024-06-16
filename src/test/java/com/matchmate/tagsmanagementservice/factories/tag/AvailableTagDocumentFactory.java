@@ -1,7 +1,7 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
-import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
+import com.matchmate.tagsmanagementservice.domain.enums.TagStatusEnum;
 import org.instancio.Instancio;
 import org.instancio.Model;
 
@@ -13,7 +13,7 @@ import static org.instancio.Select.field;
 public class AvailableTagDocumentFactory {
     private static final Model<AvailableTagDocument> AVAILABLE_TAG_DOCUMENT_MODEL =
             Instancio.of(AvailableTagDocument.class)
-                    .generate(field(AvailableTagDocument::getStatus), gen -> gen.enumOf(TagStatus.class))
+                    .generate(field(AvailableTagDocument::getStatus), gen -> gen.enumOf(TagStatusEnum.class))
                     .set(field(AvailableTagDocument::getCreatedAt), ZonedDateTime.now())
                     .toModel();
 

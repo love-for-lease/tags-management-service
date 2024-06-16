@@ -124,6 +124,12 @@ paths:
                     numberOfElements: 2
                     first: true
                     empty: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       servers:
         - url: 'http://localhost:7000'
   /api/v1/available-tags:
@@ -226,9 +232,24 @@ components:
           type: string
         requests:
           type: integer
+          format: int64
         requestAt:
           type: string
           format: date-time
+    ErrorResponse:
+      type: object
+      title: ErrorResponse
+      properties:
+        message:
+          type: string
+        type:
+          type: string
+        details:
+          type: object
+      required:
+        - message
+        - type
+        - details
     AvailableTag:
       type: object
       title: AvailableTag
@@ -237,25 +258,10 @@ components:
           type: string
         name:
           type: string
-        status:
+        tagStatus:
           type: string
           enum:
-            - test
-            - test1
+            - CREATED
         createAt:
           type: string
           format: date-time
-    ErrorResponse:
-      title: ErrorResponse
-      type: object
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-      required:
-        - type
-        - message
-        - details

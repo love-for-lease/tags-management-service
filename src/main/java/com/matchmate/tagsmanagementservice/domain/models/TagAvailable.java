@@ -1,14 +1,14 @@
 package com.matchmate.tagsmanagementservice.domain.models;
 
-import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
+import com.matchmate.tagsmanagementservice.domain.enums.TagStatusEnum;
 import lombok.Getter;
 
 @Getter
 public class TagAvailable {
     private final String name;
-    private TagStatus status;
+    private TagStatusEnum status;
 
-    public TagAvailable(String name, TagStatus status) {
+    public TagAvailable(String name, TagStatusEnum status) {
         this.name = name;
         this.status = status;
     }

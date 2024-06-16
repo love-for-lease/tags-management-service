@@ -1,6 +1,7 @@
 package com.matchmate.tagsmanagementservice.factories.tag;
 
-import com.matchmate.tagsmanagementservice.domain.enums.TagStatus;
+import com.matchmate.tagsmanagementservice.application.web.dto.AvailableTagDto;
+import com.matchmate.tagsmanagementservice.domain.enums.TagStatusEnum;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import org.instancio.Instancio;
 import org.instancio.Model;
@@ -12,7 +13,7 @@ import static org.instancio.Select.field;
 public class TagAvailableFactory {
     private static final Model<TagAvailable> TAG_AVAILABLE_MODEL =
             Instancio.of(TagAvailable.class)
-                    .generate(field(TagAvailable::getStatus), gen -> gen.enumOf(TagStatus.class))
+                    .generate(field(TagAvailable::getStatus), gen -> gen.enumOf(TagStatusEnum.class))
                     .toModel();
 
     public static TagAvailable withValidName(String name) {

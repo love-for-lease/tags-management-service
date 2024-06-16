@@ -2,7 +2,6 @@ package com.matchmate.tagsmanagementservice.adapter.queues;
 
 import com.matchmate.tagsmanagementservice.common.event.DomainEvent;
 import com.matchmate.tagsmanagementservice.common.serializer.ObjectSerializer;
-import io.awspring.cloud.sqs.operations.SendResult;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

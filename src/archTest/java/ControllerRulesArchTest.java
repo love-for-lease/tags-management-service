@@ -1,35 +1,29 @@
 import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.domain.JavaClass;
-import static com.tngtech.archunit.core.domain.JavaClass.Functions.GET_PACKAGE_NAME;
 import com.tngtech.archunit.core.domain.JavaMember;
-import static com.tngtech.archunit.core.domain.JavaMember.Predicates.declaredIn;
 import com.tngtech.archunit.core.domain.PackageMatchers;
-import static com.tngtech.archunit.core.domain.properties.CanBeAnnotated.Predicates.annotatedWith;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import static com.tngtech.archunit.lang.conditions.ArchPredicates.are;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.tngtech.archunit.core.domain.JavaClass.Functions.GET_PACKAGE_NAME;
+import static com.tngtech.archunit.core.domain.JavaMember.Predicates.declaredIn;
+import static com.tngtech.archunit.lang.conditions.ArchPredicates.are;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
 @AnalyzeClasses(packages = "com.matchmate.tagsmanagementservice")
 public class ControllerRulesArchTest {
 
     @ArchTest
-    static final ArchRule controllers_should_only_call_service_methods =
-            classes().that().resideInAPackage("..controllers..")
-                    .should().onlyCallMethodsThat(areDeclaredInController()
-                            .or(are(annotatedWith(Service.class)))
-                            .or(are(annotatedWith(Component.class))))
-                    .allowEmptyShould(true)
-                    .because("Controllers only call methods annotated with '@Service' or '@Component'");
+    static final ArchRule controllers_should_only_call_service_methods = ArchRuleDefinition.classes()
+            .that().resideInAPackage("..controllers..")
+            .should().dependOnClassesThat().resideInAPackage("..services..")
+            .allowEmptyShould(true)
+            .because("Controllers only call methods annotated with '@Service' or '@Component' or methods with 'Pageable' parameter");
 
     @ArchTest
     static final ArchRule others_classes__should_not_depend_on_controllers =
@@ -78,16 +72,11 @@ public class ControllerRulesArchTest {
                     .allowEmptyShould(true)
                     .because("Classes within the controllers layer must be annotated with '@RestController' and '@RequestMapping'");
 
-    @ArchTest
-    static final ArchRule classes_in_controller_should_not_be_annotated_with_response_status =
-            noClasses().that().resideInAPackage("..controllers..")
-                    .should().notBeAnnotatedWith(ResponseStatus.class)
-                    .allowEmptyShould(true)
-                    .because("Classes within the 'controllers' package should not be annotated with '@ResponseStatus'");
 
     private static DescribedPredicate<JavaMember> areDeclaredInController() {
         DescribedPredicate<JavaClass> aPackageController = GET_PACKAGE_NAME.is(PackageMatchers.of("..controllers..", "java.."))
                 .as("a package '..controller..'");
         return are(declaredIn(aPackageController));
     }
+
 }

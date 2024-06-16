@@ -1,13 +1,14 @@
 package com.matchmate.tagsmanagementservice.common.event;
 
-import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentLength;
-import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotEmpty;
 import com.matchmate.tagsmanagementservice.common.serializer.EventSerializer;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentLength;
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotEmpty;
 
 @Document("stored-event")
 @Getter

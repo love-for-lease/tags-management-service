@@ -1,6 +1,6 @@
 package com.matchmate.tagsmanagementservice.domain.enums;
 
-public enum TagStatus {
+public enum TagStatusEnum {
     EXAMPLE_STATUS,
     CREATED
 }

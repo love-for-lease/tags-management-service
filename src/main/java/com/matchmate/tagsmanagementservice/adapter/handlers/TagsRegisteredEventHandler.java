@@ -7,14 +7,10 @@ import com.matchmate.tagsmanagementservice.common.event.EventStore;
 import com.matchmate.tagsmanagementservice.domain.events.TagRegisteredEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
-import org.springframework.data.domain.DomainEvents;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

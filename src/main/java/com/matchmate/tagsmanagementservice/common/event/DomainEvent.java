@@ -1,7 +1,6 @@
 package com.matchmate.tagsmanagementservice.common.event;
 
 import lombok.Getter;
-import org.springframework.context.ApplicationEvent;
 
 import java.time.LocalDateTime;
 
