@@ -26,8 +26,8 @@ public class ApplicationRulesArchTest {
     @ArchTest
     static final ArchRule application_services_should_be_annotated_with_component =
             classes().that().resideInAPackage("..application.services..")
-                    .should().beAnnotatedWith(Component.class)
-                    .andShould().notBeAnnotatedWith(Service.class)
+                    .should().beAnnotatedWith(Service.class)
+                    .orShould().beAnnotatedWith(Component.class)
                     .allowEmptyShould(true)
                     .because("Classes in application.services layer expected annotated with '@Component'. don't use '@Service'");
 

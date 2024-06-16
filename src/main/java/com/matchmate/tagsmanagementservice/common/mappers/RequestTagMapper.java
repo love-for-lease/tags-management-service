@@ -2,6 +2,7 @@ package com.matchmate.tagsmanagementservice.common.mappers;
 
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.AvailableTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
+import com.matchmate.tagsmanagementservice.application.web.dto.RequestTagDto;
 import com.matchmate.tagsmanagementservice.domain.models.TagAvailable;
 import com.matchmate.tagsmanagementservice.domain.models.tagrequest.RequestTag;
 
@@ -36,5 +37,15 @@ public class RequestTagMapper {
 
     public static TagAvailable documentToRequest(AvailableTagDocument availableTagDocument) {
         return new TagAvailable(availableTagDocument.getName(),  availableTagDocument.getStatus());
+    }
+
+    public static RequestTagDto toDto(RequestTagDocument document) {
+        RequestTagDto requestTagDto = new RequestTagDto();
+        requestTagDto.setId(document.getId());
+        requestTagDto.setName(document.getName());
+        requestTagDto.requests(document.getRequests());
+        requestTagDto.setRequestAt(document.getRequestedAt().toOffsetDateTime());
+
+        return requestTagDto;
     }
 }

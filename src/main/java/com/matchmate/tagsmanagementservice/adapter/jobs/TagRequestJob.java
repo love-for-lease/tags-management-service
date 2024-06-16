@@ -1,6 +1,5 @@
 package com.matchmate.tagsmanagementservice.adapter.jobs;
 
-import com.matchmate.tagsmanagementservice.adapter.exceptions.NoPendingTagException;
 import com.matchmate.tagsmanagementservice.adapter.handlers.TagsRegisteredEventHandler;
 import com.matchmate.tagsmanagementservice.adapter.persistence.documents.RequestTagDocument;
 import com.matchmate.tagsmanagementservice.adapter.persistence.repository.RequestTagMongoRepository;

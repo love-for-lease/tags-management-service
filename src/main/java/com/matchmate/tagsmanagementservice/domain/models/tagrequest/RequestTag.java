@@ -1,13 +1,14 @@
 package com.matchmate.tagsmanagementservice.domain.models.tagrequest;
 
-import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotBlank;
-import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotNull;
 import com.matchmate.tagsmanagementservice.common.domain.Aggregate;
 import com.matchmate.tagsmanagementservice.common.visitor.Visitable;
 import com.matchmate.tagsmanagementservice.common.visitor.Visitor;
 import lombok.Getter;
 
 import java.util.UUID;
+
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotBlank;
+import static com.matchmate.tagsmanagementservice.common.AssertionConcern.assertArgumentNotNull;
 
 @Getter
 public class RequestTag extends Aggregate<RequestTagId> implements Visitable<RequestTag> {
